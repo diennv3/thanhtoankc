@@ -3,14 +3,16 @@ using System;
 using Karion.BusinessSolution.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Karion.BusinessSolution.Migrations
 {
     [DbContext(typeof(BusinessSolutionDbContext))]
-    partial class BusinessSolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251024033842_fix_table_leave_request_delete_userId")]
+    partial class fix_table_leave_request_delete_userId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3087,12 +3089,6 @@ namespace Karion.BusinessSolution.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AllowedEarlyMinutes")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AllowedLateMinutes")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ApprovedAt")

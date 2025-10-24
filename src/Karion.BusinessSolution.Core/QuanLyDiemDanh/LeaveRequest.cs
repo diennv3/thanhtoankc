@@ -36,16 +36,14 @@ namespace Karion.BusinessSolution.QuanLyDiemDanh
 
         public virtual bool IsForEarlyLeave { get; set; }
         public virtual bool IsForLateArrival { get; set; }
+        public virtual int? AllowedLateMinutes { get; set; }
+
+        public virtual int? AllowedEarlyMinutes { get; set; }
 
         public virtual int? NguoiBenhId { get; set; }
 
         [ForeignKey("NguoiBenhId")]
         public virtual NguoiBenh NguoiBenhFk { get; set; }
-
-        public virtual long? UserId { get; set; }
-
-        [ForeignKey("UserId")]
-        public virtual User UserFk { get; set; }
 
         public virtual int? ShiftId { get; set; }
 

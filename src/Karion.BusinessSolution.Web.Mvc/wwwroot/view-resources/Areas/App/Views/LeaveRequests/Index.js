@@ -1,9 +1,8 @@
 ﻿(function () {
     $(function () {
-
         var _$leaveRequestsTable = $('#LeaveRequestsTable');
         var _leaveRequestsService = abp.services.app.leaveRequests;
-		
+
         $('.date-picker').datetimepicker({
             locale: abp.localization.currentLanguage.name,
             format: 'L'
@@ -15,25 +14,22 @@
             'delete': abp.auth.hasPermission('Pages.LeaveRequests.Delete')
         };
 
-         var _createOrEditModal = new app.ModalManager({
+        var _createOrEditModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/LeaveRequests/CreateOrEditModal',
             scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/LeaveRequests/_CreateOrEditModal.js',
             modalClass: 'CreateOrEditLeaveRequestModal'
-        });       
+        });
 
-		 var _viewLeaveRequestModal = new app.ModalManager({
-            viewUrl: abp.appPath + 'App/LeaveRequests/ViewleaveRequestModal',
+        var _viewLeaveRequestModal = new app.ModalManager({
+            viewUrl: abp.appPath + 'App/LeaveRequests/ViewLeaveRequestModal',
             modalClass: 'ViewLeaveRequestModal'
         });
 
-		
-		
-
         var getDateFilter = function (element) {
-            if (element.data("DateTimePicker").date() == null) {
+            if (!element.length || element.data("DateTimePicker").date() == null) {
                 return null;
             }
-            return element.data("DateTimePicker").date().format("YYYY-MM-DDT00:00:00Z"); 
+            return element.data("DateTimePicker").date().format("YYYY-MM-DDT00:00:00Z");
         }
 
         var dataTable = _$leaveRequestsTable.DataTable({
@@ -44,143 +40,132 @@
                 ajaxFunction: _leaveRequestsService.getAll,
                 inputFilter: function () {
                     return {
-					filter: $('#LeaveRequestsTableFilter').val(),
-					minStartDateTimeFilter:  getDateFilter($('#MinStartDateTimeFilterId')),
-					maxStartDateTimeFilter:  getDateFilter($('#MaxStartDateTimeFilterId')),
-					minEndDateTimeFilter:  getDateFilter($('#MinEndDateTimeFilterId')),
-					maxEndDateTimeFilter:  getDateFilter($('#MaxEndDateTimeFilterId')),
-					leaveTypeFilter: $('#LeaveTypeFilterId').val(),
-					statusFilter: $('#StatusFilterId').val(),
-					reasonFilter: $('#ReasonFilterId').val(),
-					isForEarlyLeaveFilter: $('#IsForEarlyLeaveFilterId').val(),
-					isForLateArrivalFilter: $('#IsForLateArrivalFilterId').val(),
-					nguoiBenhUserNameFilter: $('#NguoiBenhUserNameFilterId').val(),
-					userNameFilter: $('#UserNameFilterId').val(),
-					shiftNameFilter: $('#ShiftNameFilterId').val()
+                        filter: $('#LeaveRequestsTableFilter').val(),
+                        minStartDateTimeFilter: getDateFilter($('#MinStartDateTimeFilterId')),
+                        maxStartDateTimeFilter: getDateFilter($('#MaxStartDateTimeFilterId')),
+                        minEndDateTimeFilter: getDateFilter($('#MinEndDateTimeFilterId')),
+                        maxEndDateTimeFilter: getDateFilter($('#MaxEndDateTimeFilterId')),
+                        leaveTypeFilter: $('#LeaveTypeFilterId').val(),
+                        statusFilter: $('#StatusFilterId').val(),
+                        reasonFilter: $('#ReasonFilterId').val(),
+                        isForEarlyLeaveFilter: $('#IsForEarlyLeaveFilterId').val(),
+                        isForLateArrivalFilter: $('#IsForLateArrivalFilterId').val(),
+                        nguoiBenhUserNameFilter: $('#NguoiBenhUserNameFilterId').val(),
+                        userNameFilter: $('#UserNameFilterId').val(),
+                        shiftNameFilter: $('#ShiftNameFilterId').val()
                     };
                 }
             },
-            columnDefs: [
+            columns: [
                 {
                     width: 120,
-                    targets: 0,
                     data: null,
                     orderable: false,
                     autoWidth: false,
                     defaultContent: '',
-                    rowAction: {
-                        cssClass: 'btn btn-brand dropdown-toggle',
-                        text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
-                        items: [
-						{
-                                text: app.localize('View'),
-                                action: function (data) {
-                                    _viewLeaveRequestModal.open({ id: data.record.leaveRequest.id });
+                    render: function (data, type, row) {
+                        var actions = [];
+
+                        actions.push({
+                            text: app.localize('View'),
+                            action: function () {
+                                _viewLeaveRequestModal.open({ id: row.leaveRequest.id });
+                            }
+                        });
+
+                        if (_permissions.edit) {
+                            actions.push({
+                                text: app.localize('Edit'),
+                                action: function () {
+                                    _createOrEditModal.open({ id: row.leaveRequest.id });
                                 }
-                        },
-						{
-                            text: app.localize('Edit'),
-                            visible: function () {
-                                return _permissions.edit;
-                            },
-                            action: function (data) {
-                            _createOrEditModal.open({ id: data.record.leaveRequest.id });                                
-                            }
-                        }, 
-						{
-                            text: app.localize('Delete'),
-                            visible: function () {
-                                return _permissions.delete;
-                            },
-                            action: function (data) {
-                                deleteLeaveRequest(data.record.leaveRequest);
-                            }
-                        }]
+                            });
+                        }
+
+                        if (_permissions.delete) {
+                            actions.push({
+                                text: app.localize('Delete'),
+                                action: function () {
+                                    deleteLeaveRequest(row.leaveRequest);
+                                }
+                            });
+                        }
+
+                        if (actions.length === 0) {
+                            return '';
+                        }
+
+                        var dropdownHtml = '<div class="dropdown">' +
+                            '<button class="btn btn-brand dropdown-toggle" type="button" data-toggle="dropdown">' +
+                            '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>' +
+                            '</button>' +
+                            '<ul class="dropdown-menu">';
+
+                        actions.forEach(function(action) {
+                            dropdownHtml += '<li><a href="javascript:void(0);" class="dropdown-item">' + action.text + '</a></li>';
+                        });
+
+                        dropdownHtml += '</ul></div>';
+
+                        return dropdownHtml;
                     }
                 },
-					{
-						targets: 1,
-						 data: "leaveRequest.startDateTime",
-						 name: "startDateTime" ,
-					render: function (startDateTime) {
-						if (startDateTime) {
-							return moment(startDateTime).format('L');
-						}
-						return "";
-					}
-			  
-					},
-					{
-						targets: 2,
-						 data: "leaveRequest.endDateTime",
-						 name: "endDateTime" ,
-					render: function (endDateTime) {
-						if (endDateTime) {
-							return moment(endDateTime).format('L');
-						}
-						return "";
-					}
-			  
-					},
-					{
-						targets: 3,
-						 data: "leaveRequest.leaveType",
-						 name: "leaveType"   
-					},
-					{
-						targets: 4,
-						 data: "leaveRequest.status",
-						 name: "status"   ,
-						render: function (status) {
-							return app.localize('Enum_LeaveRequestStatus_' + status);
-						}
-			
-					},
-					{
-						targets: 5,
-						 data: "leaveRequest.reason",
-						 name: "reason"   
-					},
-					{
-						targets: 6,
-						 data: "leaveRequest.isForEarlyLeave",
-						 name: "isForEarlyLeave"  ,
-						render: function (isForEarlyLeave) {
-							if (isForEarlyLeave) {
-								return '<div class="text-center"><i class="fa fa-check kt--font-success" title="True"></i></div>';
-							}
-							return '<div class="text-center"><i class="fa fa-times-circle" title="False"></i></div>';
-					}
-			 
-					},
-					{
-						targets: 7,
-						 data: "leaveRequest.isForLateArrival",
-						 name: "isForLateArrival"  ,
-						render: function (isForLateArrival) {
-							if (isForLateArrival) {
-								return '<div class="text-center"><i class="fa fa-check kt--font-success" title="True"></i></div>';
-							}
-							return '<div class="text-center"><i class="fa fa-times-circle" title="False"></i></div>';
-					}
-			 
-					},
-					{
-						targets: 8,
-						 data: "nguoiBenhUserName" ,
-						 name: "nguoiBenhFk.userName" 
-					},
-					{
-						targets: 9,
-						 data: "userName" ,
-						 name: "userFk.name" 
-					},
-					{
-						targets: 10,
-						 data: "shiftName" ,
-						 name: "shiftFk.name" 
-					}
-            ]
+                {
+                    data: "leaveRequest.startDateTime",
+                    name: "startDateTime",
+                    render: function (startDateTime) {
+                        return startDateTime ? moment(startDateTime).format('L') : "";
+                    }
+                },
+                {
+                    data: "leaveRequest.endDateTime",
+                    name: "endDateTime",
+                    render: function (endDateTime) {
+                        return endDateTime ? moment(endDateTime).format('L') : "";
+                    }
+                },
+                {
+                    data: "leaveRequest.type",
+                    name: "type",
+                    render: function (type) {
+                        var typeMap = {
+                            0: "Nguyên ngày",
+                            1: "Nửa ngày",
+                            2: "Về sớm",
+                            3: "Đi muộn"
+                        };
+
+                        return type !== null && type !== undefined ?
+                            (typeMap[type] || "Khác") : "";
+                    }
+                },
+                {
+                    data: "leaveRequest.reason",
+                    name: "reason"
+                },
+                {
+                    data: "leaveRequest.isForEarlyLeave",
+                    name: "isForEarlyLeave",
+                    render: function (isForEarlyLeave) {
+                        return isForEarlyLeave ?
+                            '<div class="text-center"><i class="fa fa-check text-success" title="True"></i></div>' :
+                            '<div class="text-center"><i class="fa fa-times-circle text-danger" title="False"></i></div>';
+                    }
+                },
+                {
+                    data: "leaveRequest.isForLateArrival",
+                    name: "isForLateArrival",
+                    render: function (isForLateArrival) {
+                        return isForLateArrival ?
+                            '<div class="text-center"><i class="fa fa-check text-success" title="True"></i></div>' :
+                            '<div class="text-center"><i class="fa fa-times-circle text-danger" title="False"></i></div>';
+                    }
+                },
+                {
+                    data: "nguoiBenhUserName",
+                    name: "nguoiBenhFk.userName"
+                }
+            ],
         });
 
         function getLeaveRequests() {
@@ -189,14 +174,14 @@
 
         function deleteLeaveRequest(leaveRequest) {
             abp.message.confirm(
-                '',
+                app.localize('DeleteConfirmMessage', leaveRequest.reason),
                 app.localize('AreYouSure'),
                 function (isConfirmed) {
                     if (isConfirmed) {
                         _leaveRequestsService.delete({
                             id: leaveRequest.id
                         }).done(function () {
-                            getLeaveRequests(true);
+                            getLeaveRequests();
                             abp.notify.success(app.localize('SuccessfullyDeleted'));
                         });
                     }
@@ -204,7 +189,7 @@
             );
         }
 
-		$('#ShowAdvancedFiltersSpan').click(function () {
+        $('#ShowAdvancedFiltersSpan').click(function () {
             $('#ShowAdvancedFiltersSpan').hide();
             $('#HideAdvancedFiltersSpan').show();
             $('#AdvacedAuditFiltersArea').slideDown();
@@ -218,25 +203,25 @@
 
         $('#CreateNewLeaveRequestButton').click(function () {
             _createOrEditModal.open();
-        });        
+        });
 
-		$('#ExportToExcelButton').click(function () {
+        $('#ExportToExcelButton').click(function () {
             _leaveRequestsService
                 .getLeaveRequestsToExcel({
-				filter : $('#LeaveRequestsTableFilter').val(),
-					minStartDateTimeFilter:  getDateFilter($('#MinStartDateTimeFilterId')),
-					maxStartDateTimeFilter:  getDateFilter($('#MaxStartDateTimeFilterId')),
-					minEndDateTimeFilter:  getDateFilter($('#MinEndDateTimeFilterId')),
-					maxEndDateTimeFilter:  getDateFilter($('#MaxEndDateTimeFilterId')),
-					leaveTypeFilter: $('#LeaveTypeFilterId').val(),
-					statusFilter: $('#StatusFilterId').val(),
-					reasonFilter: $('#ReasonFilterId').val(),
-					isForEarlyLeaveFilter: $('#IsForEarlyLeaveFilterId').val(),
-					isForLateArrivalFilter: $('#IsForLateArrivalFilterId').val(),
-					nguoiBenhUserNameFilter: $('#NguoiBenhUserNameFilterId').val(),
-					userNameFilter: $('#UserNameFilterId').val(),
-					shiftNameFilter: $('#ShiftNameFilterId').val()
-				})
+                    filter: $('#LeaveRequestsTableFilter').val(),
+                    minStartDateTimeFilter: getDateFilter($('#MinStartDateTimeFilterId')),
+                    maxStartDateTimeFilter: getDateFilter($('#MaxStartDateTimeFilterId')),
+                    minEndDateTimeFilter: getDateFilter($('#MinEndDateTimeFilterId')),
+                    maxEndDateTimeFilter: getDateFilter($('#MaxEndDateTimeFilterId')),
+                    leaveTypeFilter: $('#LeaveTypeFilterId').val(),
+                    statusFilter: $('#StatusFilterId').val(),
+                    reasonFilter: $('#ReasonFilterId').val(),
+                    isForEarlyLeaveFilter: $('#IsForEarlyLeaveFilterId').val(),
+                    isForLateArrivalFilter: $('#IsForLateArrivalFilterId').val(),
+                    nguoiBenhUserNameFilter: $('#NguoiBenhUserNameFilterId').val(),
+                    userNameFilter: $('#UserNameFilterId').val(),
+                    shiftNameFilter: $('#ShiftNameFilterId').val()
+                })
                 .done(function (result) {
                     app.downloadTempFile(result);
                 });
@@ -246,15 +231,30 @@
             getLeaveRequests();
         });
 
-		$('#GetLeaveRequestsButton').click(function (e) {
+        $('#GetLeaveRequestsButton').click(function (e) {
             e.preventDefault();
             getLeaveRequests();
         });
 
-		$(document).keypress(function(e) {
-		  if(e.which === 13) {
-			getLeaveRequests();
-		  }
-		});
+        $(document).keypress(function(e) {
+            if(e.which === 13) {
+                getLeaveRequests();
+            }
+        });
+
+        $(document).on('click', '.dropdown-item', function() {
+            var actionText = $(this).text();
+            var rowData = dataTable.row($(this).closest('tr')).data();
+
+            if (rowData) {
+                if (actionText === app.localize('View')) {
+                    _viewLeaveRequestModal.open({ id: rowData.leaveRequest.id });
+                } else if (actionText === app.localize('Edit') && _permissions.edit) {
+                    _createOrEditModal.open({ id: rowData.leaveRequest.id });
+                } else if (actionText === app.localize('Delete') && _permissions.delete) {
+                    deleteLeaveRequest(rowData.leaveRequest);
+                }
+            }
+        });
     });
 })();

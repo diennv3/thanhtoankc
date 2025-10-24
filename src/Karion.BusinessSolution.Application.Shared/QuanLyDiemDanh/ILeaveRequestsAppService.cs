@@ -25,9 +25,5 @@ namespace Karion.BusinessSolution.QuanLyDiemDanh
 		
 		Task<PagedResultDto<LeaveRequestNguoiBenhLookupTableDto>> GetAllNguoiBenhForLookupTable(GetAllForLookupTableInput input);
 		
-		Task<PagedResultDto<LeaveRequestUserLookupTableDto>> GetAllUserForLookupTable(GetAllForLookupTableInput input);
-		
-		Task<PagedResultDto<LeaveRequestShiftLookupTableDto>> GetAllShiftForLookupTable(GetAllForLookupTableInput input);
-		
     }
 }

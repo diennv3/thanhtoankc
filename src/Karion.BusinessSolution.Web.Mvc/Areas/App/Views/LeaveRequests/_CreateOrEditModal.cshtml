@@ -1,142 +1,91 @@
 ﻿@using Karion.BusinessSolution.QuanLyDiemDanh;
-					
 @using System.Globalization
 @using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
 @using Karion.BusinessSolution.Web.Areas.App.Models.LeaveRequests
 @model CreateOrEditLeaveRequestModalViewModel
 
-@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditLeaveRequest")) : L("CreateNewLeaveRequest")))
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? ("Sửa đơn xin nghỉ") : "Tạo đơn xin nghỉ"))
 
 <div class="modal-body">
-        <div id="LeaveRequestInformationsTab">
-            <form name="LeaveRequestInformationsForm" role="form" novalidate class="form-validation">
+    <div id="LeaveRequestInformationsTab">
+        <form name="LeaveRequestInformationsForm" role="form" novalidate class="form-validation">
 
-                @if (Model.IsEditMode)
-                {
-                    <input type="hidden" name="id" value="@Model.LeaveRequest.Id" />
-                }
+            @if (Model.IsEditMode)
+            {
+                <input type="hidden" name="id" value="@Model.LeaveRequest.Id" />
+            }
 
-				            
-								<div class="form-group m-form__group">
-										<label for="NguoiBenhUserName">@L("NguoiBenh")</label>
-									    <div class="input-group">
-											<input class="form-control" id="NguoiBenhUserName" name="nguoiBenhUserName" value="@Model.NguoiBenhUserName" type="text" disabled>
-										<div class="input-group-append">
-											<button class="btn btn-primary blue" id="OpenNguoiBenhLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
-										</div> 
-										<div class="input-group-prepend">
-											<button class="btn btn-danger btn-icon" type="button" id="ClearNguoiBenhUserNameButton"><i class="fa fa-times"></i></button>
-										</div>
-									</div>
-								</div>
+            <div class="form-group m-form__group">
+                <label for="NguoiBenhUserName">Người được nghỉ</label>
+                <div class="input-group">
+                    <input class="form-control" id="NguoiBenhUserName" name="nguoiBenhUserName" value="@Model.NguoiBenhUserName" type="text" disabled>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary blue" id="OpenNguoiBenhLookupTableButton" type="button"><i class="fa fa-search"></i> Chọn</button>
+                    </div>
+                    <div class="input-group-prepend">
+                        <button class="btn btn-danger btn-icon" type="button" id="ClearNguoiBenhUserNameButton"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
+            <input class="form-control" id="LeaveRequest_NguoiBenhId" value="@Model.LeaveRequest.NguoiBenhId" type="hidden" name="nguoiBenhId" />
+            <div class="form-group">
+                <label for="LeaveRequest_StartDateTime">Thời gian bắt đầu</label>
+                <input class="form-control m-input date-picker" id="LeaveRequest_StartDateTime" type="text" name="startDateTime" value="@Model.LeaveRequest.StartDateTime" />
+            </div>
 
-								@if (Model.IsEditMode)
-								{
-									<input class="form-control" id="LeaveRequest_NguoiBenhId" value="@Model.LeaveRequest.NguoiBenhId" type="text" name="nguoiBenhId"  hidden/>
-								}
-								 else
-								{ 
-									<input class="form-control" id="LeaveRequest_NguoiBenhId" value="" type="text" name="nguoiBenhId"  hidden/>
-								}
+            <div class="form-group">
+                <label for="LeaveRequest_EndDateTime">Thời gian kết thúc</label>
+                <input class="form-control m-input date-picker" id="LeaveRequest_EndDateTime" type="text" name="endDateTime" value="@Model.LeaveRequest.EndDateTime" />
+            </div>
 
-            
-								<div class="form-group m-form__group">
-										<label for="UserName">@L("User")</label>
-									    <div class="input-group">
-											<input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
-										<div class="input-group-append">
-											<button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
-										</div> 
-										<div class="input-group-prepend">
-											<button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton"><i class="fa fa-times"></i></button>
-										</div>
-									</div>
-								</div>
+            <div class="form-group m-form__group">
+                <label for="LeaveRequest_Type">Loại đơn</label>
+                @{ var selectListType = Html.GetEnumSelectList(typeof(LeaveRequestType));
+                    foreach (var selectOption in selectListType) { selectOption.Text = (selectOption.Value == "0" ? "Nguyên ngày" : selectOption.Value == "1" ? "Nửa ngày" : selectOption.Value == "2" ? "Về sớm" : selectOption.Value == "3" ? "Đi muộn" : "Khác"); } }
+                <select class="form-control m-input m-input--square" name="type" id="LeaveRequest_Type" asp-for="@Model.LeaveRequest.Type" asp-items="@selectListType"></select>
+            </div>
 
-								@if (Model.IsEditMode)
-								{
-									<input class="form-control" id="LeaveRequest_UserId" value="@Model.LeaveRequest.UserId" type="text" name="userId" required hidden/>
-								}
-								 else
-								{ 
-									<input class="form-control" id="LeaveRequest_UserId" value="" type="text" name="userId" required hidden/>
-								}
+            <div class="form-group m-form__group" id="halfDayPartRow" style="display:none;">
+                <label for="LeaveRequest_HalfDayPart">Buổi nghỉ (nửa ngày)</label>
+                @{ var selectListHalfDay = Html.GetEnumSelectList(typeof(HalfDayPart));
+                    foreach (var selectOption in selectListHalfDay) { selectOption.Text = (selectOption.Value == "0" ? "Sáng" : "Chiều"); } }
+                <select class="form-control m-input m-input--square" name="halfDayPart" id="LeaveRequest_HalfDayPart" asp-for="@Model.LeaveRequest.HalfDayPart" asp-items="@selectListHalfDay"></select>
+            </div>
 
-            
-								<div class="form-group m-form__group">
-										<label for="ShiftName">@L("Shift")</label>
-									    <div class="input-group">
-											<input class="form-control" id="ShiftName" name="shiftName" value="@Model.ShiftName" type="text" disabled>
-										<div class="input-group-append">
-											<button class="btn btn-primary blue" id="OpenShiftLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
-										</div> 
-										<div class="input-group-prepend">
-											<button class="btn btn-danger btn-icon" type="button" id="ClearShiftNameButton"><i class="fa fa-times"></i></button>
-										</div>
-									</div>
-								</div>
+            <div class="form-group m-form__group" id="allowedLateRow" style="display:none;">
+                <label for="LeaveRequest_AllowedLateMinutes">Số phút được phép đi muộn</label>
+                <input class="form-control" id="LeaveRequest_AllowedLateMinutes" type="number" min="0" name="allowedLateMinutes" value="@Model.LeaveRequest.AllowedLateMinutes" />
+                <small class="form-text text-muted">Nhập số phút tối đa cho phép đi muộn (ví dụ 15)</small>
+            </div>
 
-								@if (Model.IsEditMode)
-								{
-									<input class="form-control" id="LeaveRequest_ShiftId" value="@Model.LeaveRequest.ShiftId" type="text" name="shiftId" required hidden/>
-								}
-								 else
-								{ 
-									<input class="form-control" id="LeaveRequest_ShiftId" value="" type="text" name="shiftId" required hidden/>
-								}
+            <div class="form-group m-form__group" id="allowedEarlyRow" style="display:none;">
+                <label for="LeaveRequest_AllowedEarlyMinutes">Số phút được phép về sớm</label>
+                <input class="form-control" id="LeaveRequest_AllowedEarlyMinutes" type="number" min="0" name="allowedEarlyMinutes" value="@Model.LeaveRequest.AllowedEarlyMinutes" />
+                <small class="form-text text-muted">Nhập số phút tối đa cho phép về sớm (ví dụ 30)</small>
+            </div>
+            <div class="form-group">
+                <label for="LeaveRequest_Reason">Lý do</label>
+                <input class="form-control" id="LeaveRequest_Reason" value="@Model.LeaveRequest.Reason" type="text" name="reason" />
+            </div>
 
+            <div class="m-checkbox-list">
+                <label for="LeaveRequest_IsForEarlyLeave" class="kt-checkbox">
+                    <input id="LeaveRequest_IsForEarlyLeave" type="checkbox" name="isForEarlyLeave" value="true" @Html.Raw(Model.LeaveRequest.IsForEarlyLeave ? "checked=\"checked\"" : "") />
+                    Cho về sớm
+                    <span></span>
+                </label>
+            </div>
 
+            <div class="m-checkbox-list">
+                <label for="LeaveRequest_IsForLateArrival" class="kt-checkbox">
+                    <input id="LeaveRequest_IsForLateArrival" type="checkbox" name="isForLateArrival" value="true" @Html.Raw(Model.LeaveRequest.IsForLateArrival ? "checked=\"checked\"" : "") />
+                    Cho đi muộn
+                    <span></span>
+                </label>
+            </div>
 
-				
-								<div class="form-group">
-									<label for="LeaveRequest_StartDateTime">@L("StartDateTime")</label>
-									<input class="form-control m-input date-picker" id="LeaveRequest_StartDateTime" type="text" name="startDateTime" value="@Model.LeaveRequest.StartDateTime"/>
-								</div>
-					
-								<div class="form-group">
-									<label for="LeaveRequest_EndDateTime">@L("EndDateTime")</label>
-									<input class="form-control m-input date-picker" id="LeaveRequest_EndDateTime" type="text" name="endDateTime" value="@Model.LeaveRequest.EndDateTime"/>
-								</div>
-					
-								<div class="form-group">
-									<label for="LeaveRequest_LeaveType">@L("LeaveType")</label>
-									<input class="form-control" id="LeaveRequest_LeaveType" value="@Model.LeaveRequest.LeaveType" type="text" name="leaveType"     />
-								</div>
-					
-								@{
-					var selectListStatus = Html.GetEnumSelectList(typeof(LeaveRequestStatus));
-					 foreach (var selectOption in selectListStatus) { selectOption.Text = L("Enum_LeaveRequestStatus_" + selectOption.Value); }
-					}
-								<div class="form-group m-form__group">
-									<label for="LeaveRequest_Status">@L("Status")</label>
-										<select class="form-control m-input m-input--square" name="status" id="LeaveRequest_Status" asp-for="@Model.LeaveRequest.Status" asp-items="@selectListStatus">
-									</select>
-								</div>
-					
-								<div class="form-group">
-									<label for="LeaveRequest_Reason">@L("Reason")</label>
-									<input class="form-control" id="LeaveRequest_Reason" value="@Model.LeaveRequest.Reason" type="text" name="reason"     />
-								</div>
-					
-								<div class="m-checkbox-list">
-									<label for="LeaveRequest_IsForEarlyLeave" class="kt-checkbox">
-										<input id="LeaveRequest_IsForEarlyLeave" type="checkbox" name="isForEarlyLeave" value="true" @Html.Raw(Model.LeaveRequest.IsForEarlyLeave ?"checked=\"checked\"":"") />
-										@L("IsForEarlyLeave")
-										<span></span>
-									</label>
-								</div>
-					
-								<div class="m-checkbox-list">
-									<label for="LeaveRequest_IsForLateArrival" class="kt-checkbox">
-										<input id="LeaveRequest_IsForLateArrival" type="checkbox" name="isForLateArrival" value="true" @Html.Raw(Model.LeaveRequest.IsForLateArrival ?"checked=\"checked\"":"") />
-										@L("IsForLateArrival")
-										<span></span>
-									</label>
-								</div>
-					
-
-            </form>
-        </div>
+        </form>
+    </div>
 </div>
 
 @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

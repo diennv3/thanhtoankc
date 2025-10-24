@@ -11,23 +11,20 @@ namespace Karion.BusinessSolution.QuanLyDiemDanh.Dtos
 
 		public DateTime EndDateTime { get; set; }
 
-		public string LeaveType { get; set; }
+		public LeaveRequestType Type { get; set; } = LeaveRequestType.FullDay;
+
+		public HalfDayPart? HalfDayPart { get; set; }
 
 		public LeaveRequestStatus Status { get; set; }
 
 		public string Reason { get; set; }
 
 		public bool IsForEarlyLeave { get; set; }
-
 		public bool IsForLateArrival { get; set; }
 
+		public int? AllowedLateMinutes { get; set; }
+		public int? AllowedEarlyMinutes { get; set; }
 
 		 public int? NguoiBenhId { get; set; }
-
-		 		 public long UserId { get; set; }
-
-		 		 public int ShiftId { get; set; }
-
-		 
     }
 }
