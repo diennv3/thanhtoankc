@@ -1,0 +1,54 @@
+﻿@using Karion.BusinessSolution.Web.Areas.App.Startup
+@using Karion.BusinessSolution.Web.Areas.App.Models.TechberConfigures
+@model TechberConfigureViewModel
+
+@{
+    ViewBag.CurrentPageName = AppPageNames.Host.TechberConfigures;
+}
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/App/Views/TechberConfigures/CreateOrEdit.js" asp-append-version="true"></script>
+}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+
+                 <div class="kt-subheader kt-grid__item">
+                  <div class="@(await GetContainerClass())">
+                    <div class="kt-subheader__main">
+                        <h3 class="kt-subheader__title">
+                            <span>@L("Details")</span>
+                        </h3>
+                        <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                        <div class="kt-subheader__breadcrumbs">
+                            <a href="/App/TechberConfigures" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i>&thinsp;@L("TechberConfigures")</a>
+                            <span class="kt-subheader__breadcrumbs-separator"></span>
+                            <a href="javascript:;" class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
+                               @L("Details")
+                            </a>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            
+
+<div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+    <div class="kt-portlet kt-portlet--mobile ">
+        <div class="kt-portlet__body ">
+             <div id="TechberConfigureInformationsTab">        
+                    <div class="row">
+                                    <div class="col-6 mb-3">
+                <h6>@L("Key") :</h6>
+                @Model.TechberConfigure.Key
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Value") :</h6>
+                @Model.TechberConfigure.Value
+            </div>
+
+                        
+                    </div>
+                </div>
+			</div>
+        </div>
+    </div>
+  </div>

@@ -1,0 +1,79 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.NguoiThans
+@model CreateOrEditNguoiThanModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditNguoiThan")) : L("CreateNewNguoiThan")))
+
+<div class="modal-body">
+        <div id="NguoiThanInformationsTab">
+            <form name="NguoiThanInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.NguoiThan.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="NguoiBenhHoVaTen">@L("NguoiBenh")</label>
+									    <div class="input-group">
+											<input class="form-control" id="NguoiBenhHoVaTen" name="nguoiBenhHoVaTen" value="@Model.NguoiBenhHoVaTen" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenNguoiBenhLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearNguoiBenhHoVaTenButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="NguoiThan_NguoiBenhId" value="@Model.NguoiThan.NguoiBenhId" type="text" name="nguoiBenhId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="NguoiThan_NguoiBenhId" value="" type="text" name="nguoiBenhId"  hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="NguoiThan_HoVaTen">@L("HoVaTen")</label>
+									<input class="form-control" id="NguoiThan_HoVaTen" value="@Model.NguoiThan.HoVaTen" type="text" name="hoVaTen"  required  maxlength="@Karion.BusinessSolution.QuanLyDanhMuc.NguoiThanConsts.MaxHoVaTenLength"  minlength="@Karion.BusinessSolution.QuanLyDanhMuc.NguoiThanConsts.MinHoVaTenLength"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="NguoiThan_Tuoi">@L("Tuoi")</label>
+									<input class="form-control m-input" id="NguoiThan_Tuoi" value="@Model.NguoiThan.Tuoi.ToString(CultureInfo.InvariantCulture)" type="number" name="tuoi"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="NguoiThan_GioiTinh">@L("GioiTinh")</label>
+									<input class="form-control" id="NguoiThan_GioiTinh" value="@Model.NguoiThan.GioiTinh" type="text" name="gioiTinh"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="NguoiThan_DiaChi">@L("DiaChi")</label>
+									<input class="form-control" id="NguoiThan_DiaChi" value="@Model.NguoiThan.DiaChi" type="text" name="diaChi"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="NguoiThan_MoiQuanHe">@L("MoiQuanHe")</label>
+									<input class="form-control" id="NguoiThan_MoiQuanHe" value="@Model.NguoiThan.MoiQuanHe" type="text" name="moiQuanHe"   maxlength="@Karion.BusinessSolution.QuanLyDanhMuc.NguoiThanConsts.MaxMoiQuanHeLength"  minlength="@Karion.BusinessSolution.QuanLyDanhMuc.NguoiThanConsts.MinMoiQuanHeLength"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="NguoiThan_SoDienThoai">@L("SoDienThoai")</label>
+									<input class="form-control" id="NguoiThan_SoDienThoai" value="@Model.NguoiThan.SoDienThoai" type="text" name="soDienThoai"   maxlength="@Karion.BusinessSolution.QuanLyDanhMuc.NguoiThanConsts.MaxSoDienThoaiLength"  minlength="@Karion.BusinessSolution.QuanLyDanhMuc.NguoiThanConsts.MinSoDienThoaiLength"  />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

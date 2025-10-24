@@ -1,0 +1,31 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.NguoiBenhTests
+@model CreateOrEditNguoiBenhTestModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditNguoiBenhTest")) : L("CreateNewNguoiBenhTest")))
+
+<div class="modal-body">
+        <div id="NguoiBenhTestInformationsTab">
+            <form name="NguoiBenhTestInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.NguoiBenhTest.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="NguoiBenhTest_Ten">@L("Ten")</label>
+									<input class="form-control" id="NguoiBenhTest_Ten" value="@Model.NguoiBenhTest.Ten" type="text" name="ten"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

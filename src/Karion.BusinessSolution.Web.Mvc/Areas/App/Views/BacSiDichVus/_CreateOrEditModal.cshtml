@@ -1,0 +1,72 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.BacSiDichVus
+@model CreateOrEditBacSiDichVuModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditBacSiDichVu")) : L("CreateNewBacSiDichVu")))
+
+<div class="modal-body">
+        <div id="BacSiDichVuInformationsTab">
+            <form name="BacSiDichVuInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.BacSiDichVu.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="UserName">@L("User")</label>
+									    <div class="input-group">
+											<input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="BacSiDichVu_UserId" value="@Model.BacSiDichVu.UserId" type="text" name="userId" required hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="BacSiDichVu_UserId" value="" type="text" name="userId" required hidden/>
+								}
+
+            
+								<div class="form-group m-form__group">
+										<label for="DichVuTen">@L("DichVu")</label>
+									    <div class="input-group">
+											<input class="form-control" id="DichVuTen" name="dichVuTen" value="@Model.DichVuTen" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenDichVuLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearDichVuTenButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="BacSiDichVu_DichVuId" value="@Model.BacSiDichVu.DichVuId" type="text" name="dichVuId" required hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="BacSiDichVu_DichVuId" value="" type="text" name="dichVuId" required hidden/>
+								}
+
+
+
+				
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

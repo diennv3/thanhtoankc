@@ -1,0 +1,58 @@
+﻿@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.DanhSachVersions
+@model CreateOrEditDanhSachVersionModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditDanhSachVersion")) : L("CreateNewDanhSachVersion")))
+
+<div class="modal-body">
+    <div id="DanhSachVersionInformationsTab">
+        <form name="DanhSachVersionInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+                <input type="hidden" name="id" value="@Model.DanhSachVersion.Id"/>
+            }
+
+
+            <div class="form-group">
+                <label for="DanhSachVersion_Name">@L("Name")</label>
+                <select class="form-control" id="DanhSachVersion_Name" type="text" name="name" required>
+                    @if (Model.IsEditMode && Model.DanhSachVersion.Name.Equals("ios"))
+                    {
+                        <option value="ios" selected>ios</option>
+                    }
+                    else
+                    {
+                        <option value="ios">ios</option>
+                    }
+                    @if (Model.IsEditMode && Model.DanhSachVersion.Name.Equals("android"))
+                    {
+                        <option value="android" selected>android</option>
+                    }
+                    else
+                    {
+                        <option value="android">android</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="DanhSachVersion_VersionNumber">@L("VersionNumber")</label>
+                <input class="form-control m-input" id="DanhSachVersion_VersionNumber" value="@Model.DanhSachVersion.VersionNumber.ToString(CultureInfo.InvariantCulture)" type="number" name="versionNumber"/>
+            </div>
+
+            <div class="m-checkbox-list">
+                <label for="DanhSachVersion_IsActive" class="kt-checkbox">
+                    <input id="DanhSachVersion_IsActive" type="checkbox" name="isActive" value="true" @Html.Raw(Model.DanhSachVersion.IsActive ? "checked=\"checked\"" : "")/>
+                    @L("IsActive")
+                    <span></span>
+                </label>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

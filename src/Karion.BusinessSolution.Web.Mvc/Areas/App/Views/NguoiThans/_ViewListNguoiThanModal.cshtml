@@ -1,0 +1,33 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.NguoiThans
+@model ListNguoiThanInputViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("ListNguoiThan")))
+
+<div class="modal-body">
+        <div id="NguoiThanInformationsTab">
+            <input id="nguoiBenhId" name="nguoiBenhId" value="@Model.NguoiBenhId" hidden type="number"/>
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <table id="NguoiThansTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th>@L("Actions")</th>
+                                <th>@L("HoVaTen")</th>
+                                <th>@L("Tuoi")</th>
+                                <th>@L("GioiTinh")</th>
+                                <th>@L("DiaChi")</th>
+                                <th>@L("MoiQuanHe")</th>
+                                <th>@L("SoDienThoai")</th>
+                                <th>@L("NguoiBenhHoVaTen")</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")

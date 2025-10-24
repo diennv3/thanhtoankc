@@ -1,0 +1,87 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.PublicTokens
+@model CreateOrEditPublicTokenModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditPublicToken")) : L("CreateNewPublicToken")))
+
+<div class="modal-body">
+        <div id="PublicTokenInformationsTab">
+            <form name="PublicTokenInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.PublicToken.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="NguoiBenhUserName">@L("NguoiBenh")</label>
+									    <div class="input-group">
+											<input class="form-control" id="NguoiBenhUserName" name="nguoiBenhUserName" value="@Model.NguoiBenhUserName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenNguoiBenhLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearNguoiBenhUserNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="PublicToken_NguoiBenhId" value="@Model.PublicToken.NguoiBenhId" type="text" name="nguoiBenhId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="PublicToken_NguoiBenhId" value="" type="text" name="nguoiBenhId"  hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="PublicToken_TimeSet">@L("TimeSet")</label>
+									<input class="form-control m-input date-picker" id="PublicToken_TimeSet" type="text" name="timeSet" value="@Model.PublicToken.TimeSet"/>
+								</div>
+					
+								<div class="form-group">
+									<label for="PublicToken_TimeExpire">@L("TimeExpire")</label>
+									<input class="form-control m-input date-picker" id="PublicToken_TimeExpire" type="text" name="timeExpire" value="@Model.PublicToken.TimeExpire"/>
+								</div>
+					
+								<div class="form-group">
+									<label for="PublicToken_Token">@L("Token")</label>
+									<input class="form-control" id="PublicToken_Token" value="@Model.PublicToken.Token" type="text" name="token"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="PublicToken_PrivateKey">@L("PrivateKey")</label>
+									<input class="form-control" id="PublicToken_PrivateKey" value="@Model.PublicToken.PrivateKey" type="text" name="privateKey"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="PublicToken_DeviceVerificationCode">@L("DeviceVerificationCode")</label>
+									<input class="form-control" id="PublicToken_DeviceVerificationCode" value="@Model.PublicToken.DeviceVerificationCode" type="text" name="deviceVerificationCode"   maxlength="@Karion.BusinessSolution.QuanLyDanhMuc.PublicTokenConsts.MaxDeviceVerificationCodeLength"  minlength="@Karion.BusinessSolution.QuanLyDanhMuc.PublicTokenConsts.MinDeviceVerificationCodeLength"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="PublicToken_LastAccessDeviceVerificationCode">@L("LastAccessDeviceVerificationCode")</label>
+									<input class="form-control" id="PublicToken_LastAccessDeviceVerificationCode" value="@Model.PublicToken.LastAccessDeviceVerificationCode" type="text" name="lastAccessDeviceVerificationCode"   maxlength="@Karion.BusinessSolution.QuanLyDanhMuc.PublicTokenConsts.MaxLastAccessDeviceVerificationCodeLength"  minlength="@Karion.BusinessSolution.QuanLyDanhMuc.PublicTokenConsts.MinLastAccessDeviceVerificationCodeLength"  />
+								</div>
+					
+								<div class="m-checkbox-list">
+									<label for="PublicToken_IsTokenLocked" class="kt-checkbox">
+										<input id="PublicToken_IsTokenLocked" type="checkbox" name="isTokenLocked" value="true" @Html.Raw(Model.PublicToken.IsTokenLocked ?"checked=\"checked\"":"") />
+										@L("IsTokenLocked")
+										<span></span>
+									</label>
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

@@ -1,0 +1,13 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.LichHenKhams
+@model List<Karion.BusinessSolution.QuanLyDanhMuc.Dtos.LichHenKhamDto>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel((L("EditLichHenKham"))))
+
+<div class="modal-body">
+       
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

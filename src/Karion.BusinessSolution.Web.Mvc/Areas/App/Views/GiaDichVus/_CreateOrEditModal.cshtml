@@ -1,0 +1,69 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.GiaDichVus
+@model CreateOrEditGiaDichVuModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditGiaDichVu")) : L("CreateNewGiaDichVu")))
+
+<div class="modal-body">
+        <div id="GiaDichVuInformationsTab">
+            <form name="GiaDichVuInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.GiaDichVu.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="DichVuTen">@L("DichVu")</label>
+									    <div class="input-group">
+											<input class="form-control" id="DichVuTen" name="dichVuTen" value="@Model.DichVuTen" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenDichVuLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearDichVuTenButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="GiaDichVu_DichVuId" value="@Model.GiaDichVu.DichVuId" type="text" name="dichVuId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="GiaDichVu_DichVuId" value="" type="text" name="dichVuId"  hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="GiaDichVu_MucGia">@L("MucGia")</label>
+									<input class="form-control" id="GiaDichVu_MucGia" value="@Model.GiaDichVu.MucGia" type="text" name="mucGia"  required  maxlength="@Karion.BusinessSolution.QuanLyDanhMuc.GiaDichVuConsts.MaxMucGiaLength"  minlength="@Karion.BusinessSolution.QuanLyDanhMuc.GiaDichVuConsts.MinMucGiaLength"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="GiaDichVu_MoTa">@L("MoTa")</label>
+									<input class="form-control" id="GiaDichVu_MoTa" value="@Model.GiaDichVu.MoTa" type="text" name="moTa"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="GiaDichVu_Gia">@L("Gia")</label>
+									<input class="form-control m-input" id="GiaDichVu_Gia" value="@Model.GiaDichVu.Gia.ToString(CultureInfo.InvariantCulture)" type="number" name="gia"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="GiaDichVu_NgayApDung">@L("NgayApDung")</label>
+									<input class="form-control m-input date-picker" id="GiaDichVu_NgayApDung" type="text" name="ngayApDung" value="@Model.GiaDichVu.NgayApDung"/>
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

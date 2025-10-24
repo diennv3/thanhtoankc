@@ -1,0 +1,64 @@
+﻿@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.ThongTinBacSiMoRongs
+@model CreateOrEditThongTinBacSiMoRongModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditThongTinBacSiMoRong")) : L("CreateNewThongTinBacSiMoRong")))
+
+<div class="modal-body">
+    <div id="ThongTinBacSiMoRongInformationsTab">
+        <form name="ThongTinBacSiMoRongInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+                <input type="hidden" name="id" value="@Model.ThongTinBacSiMoRong.Id"/>
+            }
+
+
+            <div class="form-group m-form__group">
+                <label for="UserName">@L("TenBacSi")</label>
+                <div class="input-group">
+                    <input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button">
+                            <i class="fa fa-search"></i> @L("Pick")</button>
+                    </div>
+                    <div class="input-group-prepend">
+                        <button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.IsEditMode)
+            {
+                <input class="form-control" id="ThongTinBacSiMoRong_UserId" value="@Model.ThongTinBacSiMoRong.UserId" type="text" name="userId" hidden/>
+            }
+            else
+            {
+                <input class="form-control" id="ThongTinBacSiMoRong_UserId" value="" type="text" name="userId" hidden/>
+            }
+
+
+            <div class="form-group">
+                <label for="ThongTinBacSiMoRong_Image">@L("Image")</label>
+                <input class="form-control" id="ThongTinBacSiMoRong_Image" value="@Model.ThongTinBacSiMoRong.Image" type="text" name="image"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ThongTinBacSiMoRong_TieuSu">@L("TieuSu")</label>
+                <input class="form-control" id="ThongTinBacSiMoRong_TieuSu" value="@Model.ThongTinBacSiMoRong.TieuSu" type="text" name="tieuSu"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ThongTinBacSiMoRong_ChucDanh">@L("ChucDanh")</label>
+                <input class="form-control" id="ThongTinBacSiMoRong_ChucDanh" value="@Model.ThongTinBacSiMoRong.ChucDanh" type="text" name="chucDanh"/>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

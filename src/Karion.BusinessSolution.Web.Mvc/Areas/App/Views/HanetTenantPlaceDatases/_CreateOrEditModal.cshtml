@@ -1,0 +1,51 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.HanetTenantPlaceDatases
+@model CreateOrEditHanetTenantPlaceDatasModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditHanetTenantPlaceDatas")) : L("CreateNewHanetTenantPlaceDatas")))
+
+<div class="modal-body">
+        <div id="HanetTenantPlaceDatasInformationsTab">
+            <form name="HanetTenantPlaceDatasInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.HanetTenantPlaceDatas.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="HanetTenantPlaceDatas_placeName">@L("placeName")</label>
+									<input class="form-control" id="HanetTenantPlaceDatas_placeName" value="@Model.HanetTenantPlaceDatas.placeName" type="text" name="placeName"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="HanetTenantPlaceDatas_placeAddress">@L("placeAddress")</label>
+									<input class="form-control" id="HanetTenantPlaceDatas_placeAddress" value="@Model.HanetTenantPlaceDatas.placeAddress" type="text" name="placeAddress"     />
+								</div>
+					
+								<div class="form-group" hidden>
+									<label for="HanetTenantPlaceDatas_placeId">@L("placeId")</label>
+									<input class="form-control" id="HanetTenantPlaceDatas_placeId" value="@Model.HanetTenantPlaceDatas.placeId" type="text" name="placeId"     />
+								</div>
+					
+								<div class="form-group" hidden>
+									<label for="HanetTenantPlaceDatas_userId">@L("userId")</label>
+									<input class="form-control m-input" id="HanetTenantPlaceDatas_userId" value="@Model.HanetTenantPlaceDatas.userId.ToString(CultureInfo.InvariantCulture)" type="number" name="userId"  />
+								</div>
+					
+								<div class="form-group" hidden>
+									<label for="HanetTenantPlaceDatas_tenantId">@L("tenantId")</label>
+									<input class="form-control m-input" id="HanetTenantPlaceDatas_tenantId" value="@Model.HanetTenantPlaceDatas.tenantId.ToString(CultureInfo.InvariantCulture)" type="number" name="tenantId"  />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

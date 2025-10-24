@@ -1,0 +1,59 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.DichVus
+@model CreateOrEditDichVuModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditDichVu")) : L("CreateNewDichVu")))
+
+<div class="modal-body">
+        <div id="DichVuInformationsTab">
+            <form name="DichVuInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.DichVu.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="ChuyenKhoaTen">@L("ChuyenKhoa")</label>
+									    <div class="input-group">
+											<input class="form-control" id="ChuyenKhoaTen" name="chuyenKhoaTen" value="@Model.ChuyenKhoaTen" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenChuyenKhoaLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearChuyenKhoaTenButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="DichVu_ChuyenKhoaId" value="@Model.DichVu.ChuyenKhoaId" type="text" name="chuyenKhoaId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="DichVu_ChuyenKhoaId" value="" type="text" name="chuyenKhoaId"  hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="DichVu_Ten">@L("Ten")</label>
+									<input class="form-control" id="DichVu_Ten" value="@Model.DichVu.Ten" type="text" name="ten"  required  maxlength="@Karion.BusinessSolution.QuanLyDanhMuc.DichVuConsts.MaxTenLength"  minlength="@Karion.BusinessSolution.QuanLyDanhMuc.DichVuConsts.MinTenLength"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="DichVu_MoTa">@L("MoTa")</label>
+									<input class="form-control" id="DichVu_MoTa" value="@Model.DichVu.MoTa" type="text" name="moTa"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

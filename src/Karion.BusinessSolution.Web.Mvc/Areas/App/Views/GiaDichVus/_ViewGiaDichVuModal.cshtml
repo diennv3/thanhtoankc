@@ -1,0 +1,40 @@
+﻿
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.GiaDichVus
+@model GiaDichVuViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="GiaDichVuInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("MucGia") :</h6>
+                @Model.GiaDichVu.MucGia
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("MoTa") :</h6>
+                @Model.GiaDichVu.MoTa
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Gia") :</h6>
+                @Model.GiaDichVu.Gia
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("NgayApDung") :</h6>
+                @Model.GiaDichVu.NgayApDung
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("DichVu")) @L("Ten") :</h6>
+                @Model.DichVuTen
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

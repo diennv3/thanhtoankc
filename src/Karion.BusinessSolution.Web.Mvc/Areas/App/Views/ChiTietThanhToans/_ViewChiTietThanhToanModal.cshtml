@@ -1,0 +1,40 @@
+﻿
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.ChiTietThanhToans
+@model ChiTietThanhToanViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="ChiTietThanhToanInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("SoTienThanhToan") :</h6>
+                @Model.ChiTietThanhToan.SoTienThanhToan
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("LoaiThanhToan") :</h6>
+                @Model.ChiTietThanhToan.LoaiThanhToan
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("NgayThanhToan") :</h6>
+                @Model.ChiTietThanhToan.NgayThanhToan
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("LichHenKham")) @L("MoTaTrieuChung") :</h6>
+                @Model.LichHenKhamMoTaTrieuChung
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("NguoiBenh")) @L("UserName") :</h6>
+                @Model.NguoiBenhUserName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

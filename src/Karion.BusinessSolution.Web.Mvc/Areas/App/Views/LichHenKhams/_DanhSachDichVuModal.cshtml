@@ -1,0 +1,64 @@
+﻿@using Karion.BusinessSolution.Authorization
+@using Karion.BusinessSolution.Web.Areas.App.Models.LichHenKhams
+@using Karion.BusinessSolution.Web.Areas.App.Startup
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Resources
+@model DanhSachDichVuHenKhamModel
+
+@section Scripts
+    {
+    <script abp-src="/view-resources/Areas/App/Views/LichHenKhams/_ListDichVuModal.js" asp-append-version="true"></script>
+}
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("DanhSachDichVu")))
+
+<div class="@(await GetContainerClass()) vkt-grid__item kt-grid__item--fluid" style="background-color: #c9c9c9;">
+    <div>
+        <input id="chuyenKhoaId" type="number" name="chuyenKhoaId" value="@Model.ChuyenKhoaId" hidden readonly />
+        <input id="rowId" type="number" name="rowId" value="@Model.Id" hidden readonly />
+        <input id="serializedDichVuId" type="text" name="serializedDichVuId" value="@Model.SerializedDichVu" hidden readonly />
+        <input id="FlagId" type="text" name="Flag" value="@Model.Flag" hidden readonly />
+        <h2>@L("DichVuChuyenKhoa")</h2>
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <div class="row align-items-center">
+                    <table id="danhSachDichVuId" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>@L("TenDichVu")</th>
+                                <th>@L("MoTaDichVu")</th>
+                                <th>@L("GiaDichVus")</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div>
+                        <span class="">@L("TongTienDichVu"): </span><span class="font-weight-bold" id="tong-tien-thanh-toan"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (string.IsNullOrEmpty(Model.QRString) && Model.Flag == Resources.LichHenKhamConst.THU_NGAN_FLAG)
+        {
+            <div id="btn-thanh-toan-wrapper" class="text-center" style="margin-bottom: 20px">
+                <button class="btn btn-success" data-target="@Model.Id" id="btn-tao-thanh-toan">Tạo thanh toán QR</button>
+            </div>
+        }
+        @if (Model.Flag == Resources.LichHenKhamConst.THU_NGAN_FLAG)
+        {
+            <div class="text-center" id="qrcontainer" data-container="@Model.QRString" style="padding: 15px">
+            </div>
+        }
+    </div>
+</div>
+
+@if (Model.Flag == 2)
+{
+    @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+}
+else
+{
+    @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+}
+

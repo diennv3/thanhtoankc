@@ -1,0 +1,88 @@
+﻿
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.NguoiBenhs
+@model NguoiBenhViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="NguoiBenhInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("HoVaTen") :</h6>
+                @Model.NguoiBenh.HoVaTen
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Tuoi") :</h6>
+                @Model.NguoiBenh.NgaySinh
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("GioiTinh") :</h6>
+                @Model.NguoiBenh.GioiTinh
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("DiaChi") :</h6>
+                @Model.NguoiBenh.DiaChi
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("UserName") :</h6>
+                @Model.NguoiBenh.UserName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("AccessFailedCount") :</h6>
+                @Model.NguoiBenh.AccessFailedCount
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("PhoneNumber") :</h6>
+                @Model.NguoiBenh.PhoneNumber
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("EmailAddress") :</h6>
+                @Model.NguoiBenh.EmailAddress
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("EmailConfirmationCode") :</h6>
+                @Model.NguoiBenh.EmailConfirmationCode
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("IsActive") :</h6>
+                @Model.NguoiBenh.IsActive
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("IsEmailConfirmed") :</h6>
+                @Model.NguoiBenh.IsEmailConfirmed
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("IsPhoneNumberConfirmed") :</h6>
+                @Model.NguoiBenh.IsPhoneNumberConfirmed
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("PasswordResetCode") :</h6>
+                @Model.NguoiBenh.PasswordResetCode
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("ProfilePicture") :</h6>
+                @Model.NguoiBenh.ProfilePicture
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Password") :</h6>
+                @Model.NguoiBenh.Password
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Token") :</h6>
+                @Model.NguoiBenh.Token
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("TokenExpire") :</h6>
+                @Model.NguoiBenh.TokenExpire
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

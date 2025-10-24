@@ -1,0 +1,87 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.ChiTietThanhToans
+@model CreateOrEditChiTietThanhToanModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditChiTietThanhToan")) : L("CreateNewChiTietThanhToan")))
+
+<div class="modal-body">
+        <div id="ChiTietThanhToanInformationsTab">
+            <form name="ChiTietThanhToanInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.ChiTietThanhToan.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="LichHenKhamMoTaTrieuChung">@L("LichHenKham")</label>
+									    <div class="input-group">
+											<input class="form-control" id="LichHenKhamMoTaTrieuChung" name="lichHenKhamMoTaTrieuChung" value="@Model.LichHenKhamMoTaTrieuChung" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenLichHenKhamLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearLichHenKhamMoTaTrieuChungButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="ChiTietThanhToan_LichHenKhamId" value="@Model.ChiTietThanhToan.LichHenKhamId" type="text" name="lichHenKhamId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="ChiTietThanhToan_LichHenKhamId" value="" type="text" name="lichHenKhamId"  hidden/>
+								}
+
+            
+								<div class="form-group m-form__group">
+										<label for="NguoiBenhUserName">@L("NguoiBenh")</label>
+									    <div class="input-group">
+											<input class="form-control" id="NguoiBenhUserName" name="nguoiBenhUserName" value="@Model.NguoiBenhUserName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenNguoiBenhLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearNguoiBenhUserNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="ChiTietThanhToan_NguoiBenhId" value="@Model.ChiTietThanhToan.NguoiBenhId" type="text" name="nguoiBenhId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="ChiTietThanhToan_NguoiBenhId" value="" type="text" name="nguoiBenhId"  hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="ChiTietThanhToan_SoTienThanhToan">@L("SoTienThanhToan")</label>
+									<input class="form-control m-input" id="ChiTietThanhToan_SoTienThanhToan" value="@Model.ChiTietThanhToan.SoTienThanhToan.ToString(CultureInfo.InvariantCulture)" type="number" name="soTienThanhToan"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ChiTietThanhToan_LoaiThanhToan">@L("LoaiThanhToan")</label>
+									<input class="form-control m-input" id="ChiTietThanhToan_LoaiThanhToan" value="@Model.ChiTietThanhToan.LoaiThanhToan.ToString(CultureInfo.InvariantCulture)" type="number" name="loaiThanhToan"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ChiTietThanhToan_NgayThanhToan">@L("NgayThanhToan")</label>
+									<input class="form-control m-input date-picker" id="ChiTietThanhToan_NgayThanhToan" type="text" name="ngayThanhToan" value="@Model.ChiTietThanhToan.NgayThanhToan"/>
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

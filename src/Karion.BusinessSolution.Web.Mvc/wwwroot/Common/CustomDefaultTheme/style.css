@@ -1,0 +1,78 @@
+﻿.kt-aside-menu-dark .kt-menu__link .kt-menu__link-icon {
+    color: #fff!important;
+}
+.kt-aside-menu-dark nav {
+    background-color: #1e1e2d!important;
+}
+.kt-aside-menu-dark nav span{
+    color: #fff!important;
+}
+.kt-aside-menu-dark nav .kt-menu__ver-arrow.la.la-angle-right{
+    font-size:16px!important;
+}
+.kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item:not(.kt-menu__item--parent):not(.kt-menu__item--open):not(.kt-menu__item--here):not(.kt-menu__item--active):hover 
+{
+    background-color: #00bb7742!important;
+}
+.kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__heading, .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__link {
+    background-color: #00bb7742!important;
+}
+.kt-menu__link{
+    background-color: transparent!important;
+}
+.kt-menu__link:hover{
+    background-color: #00bb7742!important;
+}
+body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    font-size: 13px;
+    font-weight: 100;
+    font-family: Roboto!important;
+}
+.dataTables_wrapper{
+    font-family: Roboto!important;
+}
+
+table.dataTable td.select-checkbox, 
+table.dataTable th.select-checkbox {
+    position: relative;
+    text-align: center;
+}
+
+table.dataTable td.select-checkbox:before, 
+table.dataTable th.select-checkbox:before {
+    content: " ";
+    border: 2px solid #9d9d9d;
+    border-radius: 4px;
+    display: block;
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+table.dataTable tr.selected td.select-checkbox:after,
+table.dataTable th.select-checkbox.selected:after {
+    content: "✓";
+    font-size: 13px;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #0f83d9;
+    color: #fff;
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.dataTables_info > .select-info{
+    margin-left: 10px;
+}

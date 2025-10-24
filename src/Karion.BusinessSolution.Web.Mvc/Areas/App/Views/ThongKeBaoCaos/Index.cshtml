@@ -1,0 +1,112 @@
+﻿@using Karion.BusinessSolution.Authorization
+@using Karion.BusinessSolution.Web.Areas.App.Startup
+
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/App/Views/ThongKeBaoCaos/Index.js" asp-append-version="true"></script>
+}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+
+    <div class="kt-subheader kt-grid__item">
+        <div class="@(await GetContainerClass())">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    <span>@L("DiemDanhTheoNgay")</span>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm rounded-4">
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-lg-3 col-md-4 col-12 mb-2">
+                    <input type="date" id="attendanceDate" class="form-control" />
+                </div>
+                <div class="col-lg-2 col-md-3 col-12 mb-2">
+                    <button id="btnLoadAttendance" class="btn btn-primary w-100">
+                        <i class="fa fa-search"></i> Xem điểm danh
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle mb-0" id="attendanceTable" style="background:#fff;">
+                    <thead class="table-light">
+                    <tr>
+                        <th style="min-width:180px;">Nhân viên</th>
+                        <th style="min-width:120px;" class="text-center">Check-in sáng</th>
+                        <th style="min-width:120px;" class="text-center">Trễ sáng</th>
+                        <th style="min-width:120px;" class="text-center">Check-out chiều</th>
+                        <th style="min-width:120px;" class="text-center">Về sớm chiều</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center pt-3">
+                <div id="attendanceInfo" class="small text-muted"></div>
+                <nav aria-label="Page navigation">
+                    <ul id="attendancePaging" class="pagination pagination-sm mb-0">
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .card {
+        border-radius: 16px !important;
+    }
+    .table thead th {
+        background: #f5f7fa;
+        font-weight: 600;
+        color: #222;
+        border-bottom: 2px solid #eaeaea !important;
+        vertical-align: middle;
+        text-align: center;
+    }
+    .table td, .table th {
+        vertical-align: middle !important;
+        text-align: center;
+        padding-top: 11px !important;
+        padding-bottom: 11px !important;
+    }
+    .table td:first-child, .table th:first-child {
+        text-align: center;
+    }
+    .table tbody tr:nth-child(even) {
+        background: #f9fbfc;
+    }
+    .badge-success {
+        background-color: #43c47e !important;
+    }
+    .badge-danger {
+        background-color: #ff5555 !important;
+    }
+    .badge {
+        font-size: 95%;
+        padding: 7px 14px;
+    }
+    #attendanceTable tbody tr td {
+        font-size: 15px;
+        color: #444;
+    }
+    #attendanceSearch {
+        background: #f7f8fa;
+        border-radius: 8px;
+        border: 1px solid #e2e6ea;
+        font-size: 15px;
+    }
+    .pagination .page-link {
+        border-radius: 6px !important;
+        color: #444;
+    }
+    .pagination .active .page-link {
+        background: #3498db;
+        color: #fff;
+        border-color: #3498db;
+    }
+</style>

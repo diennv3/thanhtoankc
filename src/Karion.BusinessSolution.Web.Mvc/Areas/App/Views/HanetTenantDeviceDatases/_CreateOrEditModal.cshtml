@@ -1,0 +1,77 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.HanetTenantDeviceDatases
+@model CreateOrEditHanetTenantDeviceDatasModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditHanetTenantDeviceDatas")) : L("CreateNewHanetTenantDeviceDatas")))
+
+<div class="modal-body">
+        <div id="HanetTenantDeviceDatasInformationsTab">
+            <form name="HanetTenantDeviceDatasInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.HanetTenantDeviceDatas.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="HanetTenantPlaceDatasplaceName">@L("HanetTenantPlaceDatas")</label>
+									    <div class="input-group">
+											<input class="form-control" id="HanetTenantPlaceDatasplaceName" name="hanetTenantPlaceDatasplaceName" value="@Model.HanetTenantPlaceDatasplaceName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenHanetTenantPlaceDatasLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearHanetTenantPlaceDatasplaceNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="HanetTenantDeviceDatas_HanetTenantPlaceDatasId" value="@Model.HanetTenantDeviceDatas.HanetTenantPlaceDatasId" type="text" name="hanetTenantPlaceDatasId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="HanetTenantDeviceDatas_HanetTenantPlaceDatasId" value="" type="text" name="hanetTenantPlaceDatasId"  hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="HanetTenantDeviceDatas_deviceId">@L("deviceId")</label>
+									<input class="form-control" id="HanetTenantDeviceDatas_deviceId" value="@Model.HanetTenantDeviceDatas.deviceId" type="text" name="deviceId"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="HanetTenantDeviceDatas_deviceName">@L("deviceName")</label>
+									<input class="form-control" id="HanetTenantDeviceDatas_deviceName" value="@Model.HanetTenantDeviceDatas.deviceName" type="text" name="deviceName"     />
+								</div>
+					
+								<div class="m-checkbox-list">
+									<label for="HanetTenantDeviceDatas_deviceStatus" class="kt-checkbox">
+										<input id="HanetTenantDeviceDatas_deviceStatus" type="checkbox" name="deviceStatus" value="true" @Html.Raw(Model.HanetTenantDeviceDatas.deviceStatus ?"checked=\"checked\"":"") />
+										@L("deviceStatus")
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="form-group">
+									<label for="HanetTenantDeviceDatas_lastCheck">@L("lastCheck")</label>
+									<input class="form-control m-input date-picker" id="HanetTenantDeviceDatas_lastCheck" type="text" name="lastCheck" value="@Model.HanetTenantDeviceDatas.lastCheck"/>
+								</div>
+					
+								<div class="form-group">
+									<label for="HanetTenantDeviceDatas_tenantId">@L("tenantId")</label>
+									<input class="form-control m-input" id="HanetTenantDeviceDatas_tenantId" value="@Model.HanetTenantDeviceDatas.tenantId.ToString(CultureInfo.InvariantCulture)" type="number" name="tenantId"  />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

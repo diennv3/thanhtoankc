@@ -1,0 +1,36 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.ChuyenKhoas
+@model CreateOrEditChuyenKhoaModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditChuyenKhoa")) : L("CreateNewChuyenKhoa")))
+
+<div class="modal-body">
+        <div id="ChuyenKhoaInformationsTab">
+            <form name="ChuyenKhoaInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.ChuyenKhoa.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="ChuyenKhoa_Ten">@L("Ten")</label>
+									<input class="form-control" id="ChuyenKhoa_Ten" value="@Model.ChuyenKhoa.Ten" type="text" name="ten"  required  maxlength="@Karion.BusinessSolution.QuanLyDanhMuc.ChuyenKhoaConsts.MaxTenLength"  minlength="@Karion.BusinessSolution.QuanLyDanhMuc.ChuyenKhoaConsts.MinTenLength"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ChuyenKhoa_MoTa">@L("MoTa")</label>
+									<input class="form-control" id="ChuyenKhoa_MoTa" value="@Model.ChuyenKhoa.MoTa" type="text" name="moTa"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

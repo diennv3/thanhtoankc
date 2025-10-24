@@ -1,0 +1,69 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.NguoiBenhNotifications
+@model CreateOrEditNguoiBenhNotificationModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditNguoiBenhNotification")) : L("CreateNewNguoiBenhNotification")))
+
+<div class="modal-body">
+        <div id="NguoiBenhNotificationInformationsTab">
+            <form name="NguoiBenhNotificationInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.NguoiBenhNotification.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="NguoiBenhUserName">@L("NguoiBenh")</label>
+									    <div class="input-group">
+											<input class="form-control" id="NguoiBenhUserName" name="nguoiBenhUserName" value="@Model.NguoiBenhUserName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenNguoiBenhLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearNguoiBenhUserNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="NguoiBenhNotification_NguoiBenhId" value="@Model.NguoiBenhNotification.NguoiBenhId" type="text" name="nguoiBenhId" required hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="NguoiBenhNotification_NguoiBenhId" value="" type="text" name="nguoiBenhId" required hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="NguoiBenhNotification_NoiDungTinNhan">@L("NoiDungTinNhan")</label>
+									<input class="form-control" id="NguoiBenhNotification_NoiDungTinNhan" value="@Model.NguoiBenhNotification.NoiDungTinNhan" type="text" name="noiDungTinNhan"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="NguoiBenhNotification_TrangThai">@L("TrangThai")</label>
+									<input class="form-control m-input" id="NguoiBenhNotification_TrangThai" value="@Model.NguoiBenhNotification.TrangThai.ToString(CultureInfo.InvariantCulture)" type="number" name="trangThai"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="NguoiBenhNotification_TieuDe">@L("TieuDe")</label>
+									<input class="form-control" id="NguoiBenhNotification_TieuDe" value="@Model.NguoiBenhNotification.TieuDe" type="text" name="tieuDe"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="NguoiBenhNotification_ThoiGianGui">@L("ThoiGianGui")</label>
+									<input class="form-control m-input date-picker" id="NguoiBenhNotification_ThoiGianGui" type="text" name="thoiGianGui" value="@Model.NguoiBenhNotification.ThoiGianGui"/>
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

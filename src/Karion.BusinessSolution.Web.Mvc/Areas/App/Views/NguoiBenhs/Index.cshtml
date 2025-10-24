@@ -1,0 +1,99 @@
+﻿@using Karion.BusinessSolution.Authorization
+@using Karion.BusinessSolution.Web.Areas.App.Models.NguoiBenhs
+@using Karion.BusinessSolution.Web.Areas.App.Startup
+@model NguoiBenhsViewModel
+@{ ViewBag.CurrentPageName = AppPageNames.Host.NguoiBenhs; }
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/App/Views/NguoiBenhs/Index.js" asp-append-version="true"></script>
+}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+
+    <div class="kt-subheader kt-grid__item">
+        <div class="@(await GetContainerClass())">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    <span>@L("NguoiBenhs")</span>
+                </h3>
+                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                <span class="kt-subheader__desc">
+                    @L("NguoiBenhsHeaderInfo")
+                </span>
+            </div>
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">
+                    <button id="ExportToExcelButton" class="btn btn-outline-success"><i class="fa fa-file-excel"></i> @L("ExportToExcel")</button>
+                    @if (IsGranted(AppPermissions.Pages_NguoiBenhs_Create))
+                    {
+        <button id="CreateNewNguoiBenhButton" class="btn btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNewNguoiBenh")</button>}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <div class="kt-form">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-xl-12">
+                            <div class="form-group align-items-center">
+                                <div class="input-group">
+                                    <input type="text" id="NguoiBenhsTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                                    <span class="input-group-btn">
+                                        <button id="GetNguoiBenhsButton" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="AdvacedAuditFiltersArea" style="display: none" class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="kt-separator kt-separator--border-dashed"></div>
+                    </div>
+                    <!-- existing advanced filters (kept) -->
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-xl-12">
+                        <span id="ShowAdvancedFiltersSpan" class="text-muted clickable-item"><i class="fa fa-angle-down"></i> @L("ShowAdvancedFilters")</span>
+                        <span id="HideAdvancedFiltersSpan" class="text-muted clickable-item" style="display: none"><i class="fa fa-angle-up"></i> @L("HideAdvancedFilters")</span>
+                    </div>
+                </div>
+
+                <div class="row align-items-center">
+                    <table id="NguoiBenhsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th>@L("Actions")</th>
+                                <th>@L("HoVaTen")</th>
+                                <th>@L("Tuoi")</th>
+                                <th>@L("GioiTinh")</th>
+                                <th>@L("DiaChi")</th>
+                                <th>@L("UserName")</th>
+                                <th>Phân ca</th>
+                                <th>Giờ ca</th>
+                                <th>Ngày làm</th>
+                                <th>@L("AccessFailedCount")</th>
+                                <th>@L("PhoneNumber")</th>
+                                <th>@L("EmailAddress")</th>
+                                <th>@L("EmailConfirmationCode")</th>
+                                <th>@L("IsActive")</th>
+                                <th>@L("IsEmailConfirmed")</th>
+                                <th>@L("IsPhoneNumberConfirmed")</th>
+                                <th>@L("PasswordResetCode")</th>
+                                <th>@L("ProfilePicture")</th>
+                                <th>@L("Password")</th>
+                                <th>@L("Token")</th>
+                                <th>@L("TokenExpire")</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

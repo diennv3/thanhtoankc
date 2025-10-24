@@ -1,0 +1,28 @@
+﻿
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.ChuyenKhoas
+@model ChuyenKhoaViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="ChuyenKhoaInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("Ten") :</h6>
+                @Model.ChuyenKhoa.Ten
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("MoTa") :</h6>
+                @Model.ChuyenKhoa.MoTa
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

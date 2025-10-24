@@ -1,0 +1,44 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.Versions
+@model CreateOrEditVersionModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditVersion")) : L("CreateNewVersion")))
+
+<div class="modal-body">
+        <div id="VersionInformationsTab">
+            <form name="VersionInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.Version.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="Version_Name">@L("Name")</label>
+									<input class="form-control" id="Version_Name" value="@Model.Version.Name" type="text" name="name"  required    />
+								</div>
+					
+								<div class="form-group">
+									<label for="Version_Version">@L("Version")</label>
+									<input class="form-control m-input" id="Version_Version" value="@Model.Version.Version.ToString(CultureInfo.InvariantCulture)" type="number" name="version"  />
+								</div>
+					
+								<div class="m-checkbox-list">
+									<label for="Version_IsActive" class="kt-checkbox">
+										<input id="Version_IsActive" type="checkbox" name="isActive" value="true" @Html.Raw(Model.Version.IsActive ?"checked=\"checked\"":"") />
+										@L("IsActive")
+										<span></span>
+									</label>
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

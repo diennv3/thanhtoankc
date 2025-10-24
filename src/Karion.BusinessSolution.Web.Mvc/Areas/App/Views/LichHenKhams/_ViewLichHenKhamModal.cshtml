@@ -1,0 +1,125 @@
+﻿@using Karion.BusinessSolution.Extension.Karion.BusinessSolution.Common
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.LichHenKhams
+@model LichHenKhamViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("ChiTietHenKham")))
+<style>
+    th{
+        text-align: center;
+    }
+    h4{
+        text-align: center; 
+        font-weight: bold
+    }
+</style>
+
+<div class="modal-body" style="">
+    <div id="LichHenKhamInformationsTab">
+        <div class="row">
+            <div class="col-5">
+                <h4>THÔNG TIN HẸN KHÁM</h4>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th style="text-align: center; font-weight: bold"  colspan="3"> THÔNG TIN BỆNH NHÂN</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="text-align: center"><i class="fas fa-address-card"></i></td>
+                        <td style="text-align: left; font-weight: bold"> CMND/CCCD</td>
+                        <td style="text-align: center">@Model.Detail[0].NguoiBenh.UserName</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center"><i class="fas fa-user"></i></td>
+                        <td style="text-align: left; font-weight: bold"> BỆNH NHÂN </td>
+                        <td style="text-align: center">@Model.Detail[0].NguoiBenh.HoVaTen</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center"><i class="fas fa-map"></i></td>
+                        <td style="text-align: left; font-weight: bold"> ĐỊA CHỈ </td>
+                        <td style="text-align: center">@Model.Detail[0].NguoiBenh.DiaChi</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center"><i class="fas fa-venus-mars"></i></td>
+                        <td style="text-align: left; font-weight: bold"> GIỚI TÍNH </td>
+                        <td style="text-align: center">@Model.Detail[0].NguoiBenh.GioiTinh</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center"><i class="fas fa-calendar-alt"></i></td>
+                        <td style="text-align: left; font-weight: bold"> NGÀY SINH </td>
+                        <td style="text-align: center">@Model.Detail[0].NguoiBenh.NgaySinh / @Model.Detail[0].NguoiBenh.ThangSinh / @Model.Detail[0].NguoiBenh.NamSinh</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center"><i class="fas fa-phone-alt"></i></td>
+                        <td style="text-align: left; font-weight: bold"> SỐ ĐIỆN THOẠI </td>
+                        <td style="text-align: center">@Model.Detail[0].NguoiBenh.PhoneNumber</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-7">
+                <h4>LỊCH SỬ THANH TOÁN</h4>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Ngày thanh toán</th>
+                        <th>Số tiền thanh toán</th>
+                        <th>QR</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @{
+                        int dem = 1;
+                    }
+                    @foreach (var cttt in Model.ChiTietThanhToan)
+                    {
+                        <tr>
+                            <td style="text-align: center">@(dem++)</td>     
+                            <td style="text-align: center">@cttt.NgayThanhToan</td>
+                            <td style="text-align: center">@cttt.SoTienThanhToan.toCurrency()</td>
+                            <td style="text-align: center">
+                                @if (cttt.TrangThaiThanhToan)
+                                {
+                                    <button class="btn btn-success btn-sm btn-brand" disabled>Đã Thanh toán</button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-primary btn-sm btn-brand tao-qrthanhtoan" data-lhk="@cttt.LichHenKhamId" data-cttt="@cttt.Id" id="@cttt.Id" title="QR Thanh Toán"><i class="fas fa-qrcode"></i> QR</button>   
+                                }
+                                
+                            </td>
+                        </tr>    
+                    }
+                    </tbody>
+                    <tr>
+                        <td colspan="2" style="text-align: center; font-weight: bold;">TỔNG TIỀN ĐÃ THANH TOÁN / TỔNG CHI PHÍ KHÁM</td> 
+                        <td style="text-align: center; font-weight: bold; color: #0d1217" colspan="2">
+                            @Model.ChiTietThanhToan.Sum(i => i.SoTienThanhToan).toCurrency() / @Model.Detail[0].LichHenKham.TongChiPhi.toCurrency()
+                        </td> 
+                    </tr>
+                    @if (Model.Detail[0].LichHenKham.TongChiPhi > Model.Detail[0].LichHenKham.TongTienThanhToan || Model.Detail[0].LichHenKham.IsTamUng)
+                    {
+                        <tr>
+                            <td colspan="2" style="text-align: center; font-weight: bold;">SỐ TIỀN NỢ TẠM ỨNG CÒN LẠI</td> 
+                            <td style="text-align: center; font-weight: bold; color: #0d1217" colspan="2">
+                                @{
+                                    var soTienConLai = Model.Detail[0].LichHenKham.TongChiPhi - Model.Detail[0].LichHenKham.TongTienThanhToan;
+                                }
+                                @soTienConLai.toCurrency()
+                            </td> 
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="4"><button class="btn btn-info btn-sm btn-brand" id="kiemTraThanhToanNganHang" lichhenkhamid="@Model.Detail[0].LichHenKham.Id" style="text-align: center">Kiểm tra thanh toán</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

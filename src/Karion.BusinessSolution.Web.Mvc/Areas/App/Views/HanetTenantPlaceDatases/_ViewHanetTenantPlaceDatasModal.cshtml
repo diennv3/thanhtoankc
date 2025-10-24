@@ -1,0 +1,40 @@
+﻿
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.HanetTenantPlaceDatases
+@model HanetTenantPlaceDatasViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="HanetTenantPlaceDatasInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("placeName") :</h6>
+                @Model.HanetTenantPlaceDatas.placeName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("placeAddress") :</h6>
+                @Model.HanetTenantPlaceDatas.placeAddress
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("placeId") :</h6>
+                @Model.HanetTenantPlaceDatas.placeId
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("userId") :</h6>
+                @Model.HanetTenantPlaceDatas.userId
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("tenantId") :</h6>
+                @Model.HanetTenantPlaceDatas.tenantId
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

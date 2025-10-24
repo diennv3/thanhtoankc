@@ -1,0 +1,52 @@
+﻿
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.Attendances
+@model AttendanceViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="AttendanceInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("CheckInLatitude") :</h6>
+                @Model.Attendance.CheckInLatitude
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("CheckInLongitude") :</h6>
+                @Model.Attendance.CheckInLongitude
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("IsCheckInFaceMatched") :</h6>
+                @Model.Attendance.IsCheckInFaceMatched
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("IsWithinLocation") :</h6>
+                @Model.Attendance.IsWithinLocation
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("CheckInDeviceInfo") :</h6>
+                @Model.Attendance.CheckInDeviceInfo
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("CheckInFaceMatchPercentage") :</h6>
+                @Model.Attendance.CheckInFaceMatchPercentage
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("CheckIn") :</h6>
+                @Model.Attendance.CheckIn
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>Nhân viên @L("UserName") :</h6>
+                @Model.NguoiBenhName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

@@ -1,0 +1,22 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace Karion.BusinessSolution.Migrations
+{
+    public partial class them_truong_QRString : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AddColumn<string>(
+                name: "QRString",
+                table: "LichHenKhams",
+                nullable: true);
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropColumn(
+                name: "QRString",
+                table: "LichHenKhams");
+        }
+    }
+}

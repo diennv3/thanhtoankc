@@ -1,0 +1,31 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.HanetTenantLogs
+@model CreateOrEditHanetTenantLogModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditHanetTenantLog")) : L("CreateNewHanetTenantLog")))
+
+<div class="modal-body">
+        <div id="HanetTenantLogInformationsTab">
+            <form name="HanetTenantLogInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.HanetTenantLog.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="HanetTenantLog_Value">@L("Value")</label>
+									<input class="form-control" id="HanetTenantLog_Value" value="@Model.HanetTenantLog.Value" type="text" name="value"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

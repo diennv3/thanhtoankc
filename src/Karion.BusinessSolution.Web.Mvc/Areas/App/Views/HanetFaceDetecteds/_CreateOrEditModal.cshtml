@@ -1,0 +1,56 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.HanetFaceDetecteds
+@model CreateOrEditHanetFaceDetectedModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditHanetFaceDetected")) : L("CreateNewHanetFaceDetected")))
+
+<div class="modal-body">
+        <div id="HanetFaceDetectedInformationsTab">
+            <form name="HanetFaceDetectedInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.HanetFaceDetected.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="HanetFaceDetected_placeId">@L("placeId")</label>
+									<input class="form-control" id="HanetFaceDetected_placeId" value="@Model.HanetFaceDetected.placeId" type="text" name="placeId"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="HanetFaceDetected_deviceId">@L("deviceId")</label>
+									<input class="form-control" id="HanetFaceDetected_deviceId" value="@Model.HanetFaceDetected.deviceId" type="text" name="deviceId"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="HanetFaceDetected_userDetectedId">@L("userDetectedId")</label>
+									<input class="form-control" id="HanetFaceDetected_userDetectedId" value="@Model.HanetFaceDetected.userDetectedId" type="text" name="userDetectedId"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="HanetFaceDetected_mask">@L("mask")</label>
+									<input class="form-control" id="HanetFaceDetected_mask" value="@Model.HanetFaceDetected.mask" type="text" name="mask"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="HanetFaceDetected_detectImageUrl">@L("detectImageUrl")</label>
+									<input class="form-control" id="HanetFaceDetected_detectImageUrl" value="@Model.HanetFaceDetected.detectImageUrl" type="text" name="detectImageUrl"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="HanetFaceDetected_flag">@L("flag")</label>
+									<input class="form-control m-input" id="HanetFaceDetected_flag" value="@Model.HanetFaceDetected.flag.ToString(CultureInfo.InvariantCulture)" type="number" name="flag"  />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

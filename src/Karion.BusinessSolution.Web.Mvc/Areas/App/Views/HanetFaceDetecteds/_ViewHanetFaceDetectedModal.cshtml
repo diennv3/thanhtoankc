@@ -1,0 +1,44 @@
+﻿
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.HanetFaceDetecteds
+@model HanetFaceDetectedViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="HanetFaceDetectedInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("placeId") :</h6>
+                @Model.HanetFaceDetected.placeId
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("deviceId") :</h6>
+                @Model.HanetFaceDetected.deviceId
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("userDetectedId") :</h6>
+                @Model.HanetFaceDetected.userDetectedId
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("mask") :</h6>
+                @Model.HanetFaceDetected.mask
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("detectImageUrl") :</h6>
+                @Model.HanetFaceDetected.detectImageUrl
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("flag") :</h6>
+                @Model.HanetFaceDetected.flag
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

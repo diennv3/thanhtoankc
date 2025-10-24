@@ -1,0 +1,36 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.ThongTinDonVies
+@model CreateOrEditThongTinDonViModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditThongTinDonVi")) : L("CreateNewThongTinDonVi")))
+
+<div class="modal-body">
+        <div id="ThongTinDonViInformationsTab">
+            <form name="ThongTinDonViInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.ThongTinDonVi.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="ThongTinDonVi_Key">@L("Key")</label>
+									<input class="form-control" id="ThongTinDonVi_Key" value="@Model.ThongTinDonVi.Key" type="text" name="key"  required  maxlength="@Karion.BusinessSolution.QuanLyDanhMuc.ThongTinDonViConsts.MaxKeyLength"  minlength="@Karion.BusinessSolution.QuanLyDanhMuc.ThongTinDonViConsts.MinKeyLength"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="ThongTinDonVi_Value">@L("Value")</label>
+									<input class="form-control" id="ThongTinDonVi_Value" value="@Model.ThongTinDonVi.Value" type="text" name="value"     />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

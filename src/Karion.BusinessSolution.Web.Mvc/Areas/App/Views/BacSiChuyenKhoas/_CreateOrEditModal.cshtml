@@ -1,0 +1,105 @@
+﻿@using System.Globalization
+@using Karion.BusinessSolution.Extension.Karion.BusinessSolution.Common
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.BacSiChuyenKhoas
+@model CreateOrEditBacSiChuyenKhoaModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditBacSiChuyenKhoa")) : L("CreateNewBacSiChuyenKhoa")))
+
+<div class="modal-body" xmlns="http://www.w3.org/1999/html">
+    <div id="BacSiChuyenKhoaInformationsTab">
+        <form name="BacSiChuyenKhoaInformationsForm" role="form" novalidate class="form-validation">
+            <div class="row">
+                <div class="col-3">
+                    @if (Model.IsEditMode)
+                    {
+                        <input type="hidden" name="id" value="@Model.BacSiChuyenKhoa.Id"/>
+                        <input type="hidden" name="thongTinBacSiMoRongId" value="@Model.ThongTinBacSiMoRong.Id"/>
+                    }
+
+                    <div style="text-align: center" class="form-group">
+                        <label>Ảnh bác sĩ</label>
+                        @if (Model.IsEditMode)
+                        {
+                            <img src="@("/App"+Url.Action("GetProfilePictureById", "BacSiChuyenKhoas", new {area = string.Empty})+"?id="+(Model.ThongTinBacSiMoRong.Image))" width="128" height="128" class="img-thumbnail img-rounded user-edit-dialog-profile-image"/>
+                        }
+                        else
+                        {
+                            <label>Ảnh bác sĩ</label>
+                            <img src="@Url.Content("~/Common/Images/default-profile-picture.png")" width="128" height="128" id="outImage" class="img-thumbnail img-rounded user-edit-dialog-profile-image"/>
+                        }
+
+                    </div>
+                </div>
+                <div class="col-9">
+                    <div class="form-group m-form__group">
+                        <label for="UserName">@L("TenBacSi")</label>
+                        <div class="input-group">
+                            <input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button">
+                                    <i class="fa fa-search"></i> @L("Pick")</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.IsEditMode)
+                    {
+                        <input class="form-control" id="BacSiChuyenKhoa_UserId" value="@Model.BacSiChuyenKhoa.UserId" type="text" name="userId" required hidden/>
+                    }
+                    else
+                    {
+                        <input class="form-control" id="BacSiChuyenKhoa_UserId" value="" type="text" name="userId" required hidden/>
+                    }
+
+                    <div class="form-group m-form__group">
+                        <label for="ChuyenKhoaTen">@L("ChuyenKhoa")</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ChuyenKhoaTen" name="chuyenKhoaTen" value="@Model.ChuyenKhoaTen" type="text" disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" id="OpenChuyenKhoaLookupTableButton" type="button">
+                                    <i class="fa fa-search"></i> @L("Pick")</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" id="ClearChuyenKhoaTenButton">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.IsEditMode)
+                    {
+                        <input class="form-control" id="BacSiChuyenKhoa_ChuyenKhoaId" value="@Model.BacSiChuyenKhoa.ChuyenKhoaId" type="text" name="chuyenKhoaId" required hidden/>
+                    }
+                    else
+                    {
+                        <input class="form-control" id="BacSiChuyenKhoa_ChuyenKhoaId" value="" type="text" name="chuyenKhoaId" required hidden/>
+                    }
+                    
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="chucDanh">@L("ChucDanh")</label>
+                        <input class="form-control" id="chucDanh" value="@Model.ThongTinBacSiMoRong.ChucDanh" type="text" name="chucDanh"/>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="tieuSu">@L("TieuSu")</label>
+                        <textarea class="form-control" id="tieuSu" name="tieuSu">@Model.ThongTinBacSiMoRong.TieuSu</textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

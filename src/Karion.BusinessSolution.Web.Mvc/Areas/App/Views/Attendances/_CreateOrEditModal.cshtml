@@ -1,0 +1,121 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.Attendances
+@model CreateOrEditAttendanceModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditAttendance")) : L("CreateNewAttendance")))
+
+<div class="modal-body">
+        <div id="AttendanceInformationsTab">
+            <form name="AttendanceInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.Attendance.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="NguoiBenhUserName">@L("NguoiBenh")</label>
+									    <div class="input-group">
+											<input class="form-control" id="NguoiBenhUserName" name="nguoiBenhUserName" value="@Model.NguoiBenhUserName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenNguoiBenhLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearNguoiBenhUserNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="Attendance_NguoiBenhId" value="@Model.Attendance.NguoiBenhId" type="text" name="nguoiBenhId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="Attendance_NguoiBenhId" value="" type="text" name="nguoiBenhId"  hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="Attendance_CheckInLatitude">@L("CheckInLatitude")</label>
+									<input class="form-control m-input" id="Attendance_CheckInLatitude" value="@Model.Attendance.CheckInLatitude.ToString(CultureInfo.InvariantCulture)" type="number" name="checkInLatitude"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="Attendance_CheckInLongitude">@L("CheckInLongitude")</label>
+									<input class="form-control m-input" id="Attendance_CheckInLongitude" value="@Model.Attendance.CheckInLongitude.ToString(CultureInfo.InvariantCulture)" type="number" name="checkInLongitude"  />
+								</div>
+					
+								<div class="m-checkbox-list">
+									<label for="Attendance_IsCheckInFaceMatched" class="kt-checkbox">
+										<input id="Attendance_IsCheckInFaceMatched" type="checkbox" name="isCheckInFaceMatched" value="true" @Html.Raw(Model.Attendance.IsCheckInFaceMatched ?"checked=\"checked\"":"") />
+										@L("IsCheckInFaceMatched")
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="m-checkbox-list">
+									<label for="Attendance_IsWithinLocation" class="kt-checkbox">
+										<input id="Attendance_IsWithinLocation" type="checkbox" name="isWithinLocation" value="true" @Html.Raw(Model.Attendance.IsWithinLocation ?"checked=\"checked\"":"") />
+										@L("IsWithinLocation")
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="form-group">
+									<label for="Attendance_CheckInDeviceInfo">@L("CheckInDeviceInfo")</label>
+									<input class="form-control" id="Attendance_CheckInDeviceInfo" value="@Model.Attendance.CheckInDeviceInfo" type="text" name="checkInDeviceInfo"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="Attendance_PhotoPath">@L("PhotoPath")</label>
+									<input class="form-control" id="Attendance_PhotoPath" value="@Model.Attendance.PhotoPath" type="text" name="photoPath"     />
+								</div>
+					
+								<div class="form-group">
+									<label for="Attendance_CheckInFaceMatchPercentage">@L("CheckInFaceMatchPercentage")</label>
+									<input class="form-control m-input" id="Attendance_CheckInFaceMatchPercentage" value="@Model.Attendance.CheckInFaceMatchPercentage.ToString(CultureInfo.InvariantCulture)" type="number" name="checkInFaceMatchPercentage"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="Attendance_CheckIn">@L("CheckIn")</label>
+									<input class="form-control m-input date-picker" id="Attendance_CheckIn" type="text" name="checkIn" value="@Model.Attendance.CheckIn"/>
+								</div>
+					
+								<div class="m-checkbox-list">
+									<label for="Attendance_IsLateCheckIn" class="kt-checkbox">
+										<input id="Attendance_IsLateCheckIn" type="checkbox" name="isLateCheckIn" value="true" @Html.Raw(Model.Attendance.IsLateCheckIn ?"checked=\"checked\"":"") />
+										@L("IsLateCheckIn")
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="m-checkbox-list">
+									<label for="Attendance_IsOvertime" class="kt-checkbox">
+										<input id="Attendance_IsOvertime" type="checkbox" name="isOvertime" value="true" @Html.Raw(Model.Attendance.IsOvertime ?"checked=\"checked\"":"") />
+										@L("IsOvertime")
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="form-group">
+									<label for="Attendance_OvertimeStart">@L("OvertimeStart")</label>
+									<input class="form-control m-input date-picker" id="Attendance_OvertimeStart" type="text" name="overtimeStart" value="@Model.Attendance.OvertimeStart"/>
+								</div>
+					
+								<div class="form-group">
+									<label for="Attendance_OvertimeEnd">@L("OvertimeEnd")</label>
+									<input class="form-control m-input date-picker" id="Attendance_OvertimeEnd" type="text" name="overtimeEnd" value="@Model.Attendance.OvertimeEnd"/>
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

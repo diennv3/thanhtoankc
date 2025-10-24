@@ -1,0 +1,145 @@
+﻿@using Karion.BusinessSolution.Authorization
+@using Karion.BusinessSolution.Web.Areas.App.Models.PublicTokens
+@using Karion.BusinessSolution.Web.Areas.App.Startup
+@model PublicTokensViewModel
+@{
+    ViewBag.CurrentPageName = AppPageNames.Common.PublicTokens;
+}
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/App/Views/PublicTokens/Index.js" asp-append-version="true"></script>
+}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+
+                <div class="kt-subheader kt-grid__item">
+                  <div class="@(await GetContainerClass())">
+                    <div class="kt-subheader__main">
+                        <h3 class="kt-subheader__title">
+                            <span>@L("PublicTokens")</span>
+                        </h3>
+                        <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                        <span class="kt-subheader__desc">
+                            @L("PublicTokensHeaderInfo")
+                        </span>
+                    </div>
+                    <div class="kt-subheader__toolbar">
+                        <div class="kt-subheader__wrapper">
+                            <button id="ExportToExcelButton" class="btn btn-outline-success"><i class="fa fa-file-excel"></i> @L("ExportToExcel")</button>
+            @if (IsGranted(AppPermissions.Pages_PublicTokens_Create))
+                            {
+                                <button id="CreateNewPublicTokenButton" class="btn btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNewPublicToken")</button>                
+                            }
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            
+<div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">   
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__body">
+            <div class="kt-form">
+                <div class="row align-items-center mb-4">
+                    <div class="col-xl-12">
+                        <div class="form-group align-items-center">
+                            <div class="input-group">
+                                <input type="text" id="PublicTokensTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                                <span class="input-group-btn">
+                                    <button id="GetPublicTokensButton" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+                <div id="AdvacedAuditFiltersArea" style="display: none" class="row mb-4">
+                    <div class="col-md-12">
+						<div class="kt-separator kt-separator--border-dashed"></div>
+					</div>
+
+                            <div class="col-md-3">
+                                    <div class="form-group">
+										<label for="MinTimeSetFilterId">@L("TimeSetRange")</label>
+										<div class="input-group">
+											<input class="form-control m-input date-picker" type="text" placeholder="@L("MinValue")"  id="MinTimeSetFilterId">
+											<span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+											<input class="form-control m-input date-picker" type="text" placeholder="@L("MaxValue")"  id="MaxTimeSetFilterId">
+										</div>
+									</div>
+                            </div>
+                            <div class="col-md-3">
+                                    <div class="form-group">
+										<label for="MinTimeExpireFilterId">@L("TimeExpireRange")</label>
+										<div class="input-group">
+											<input class="form-control m-input date-picker" type="text" placeholder="@L("MinValue")"  id="MinTimeExpireFilterId">
+											<span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+											<input class="form-control m-input date-picker" type="text" placeholder="@L("MaxValue")"  id="MaxTimeExpireFilterId">
+										</div>
+									</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="TokenFilterId">@L("Token")</label>
+									<input type="text" class="form-control" name="tokenFilter" id="TokenFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="PrivateKeyFilterId">@L("PrivateKey")</label>
+									<input type="text" class="form-control" name="privateKeyFilter" id="PrivateKeyFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="DeviceVerificationCodeFilterId">@L("DeviceVerificationCode")</label>
+									<input type="text" class="form-control" name="deviceVerificationCodeFilter" id="DeviceVerificationCodeFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="LastAccessDeviceVerificationCodeFilterId">@L("LastAccessDeviceVerificationCode")</label>
+									<input type="text" class="form-control" name="lastAccessDeviceVerificationCodeFilter" id="LastAccessDeviceVerificationCodeFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<label for="IsTokenLockedFilterId">@L("IsTokenLocked")</label>
+								<select class="form-control" name="IsTokenLockedFilter" id="IsTokenLockedFilterId">
+									<option value="-1">@L("All")</option>
+									<option value="0">@L("False")</option>
+									<option value="1">@L("True")</option>
+								</select>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="NguoiBenhUserNameFilterId">(@L("NguoiBenh")) @L("UserName")</label>
+									<input type="text" class="form-control" name="nguoiBenhUserNameFilter" id="NguoiBenhUserNameFilterId">
+								</div>
+                            </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-xl-12">
+                        <span id="ShowAdvancedFiltersSpan" class="text-muted clickable-item"><i class="fa fa-angle-down"></i> @L("ShowAdvancedFilters")</span>
+                        <span id="HideAdvancedFiltersSpan" class="text-muted clickable-item" style="display: none"><i class="fa fa-angle-up"></i> @L("HideAdvancedFilters")</span>
+                    </div>
+                </div>
+            <div class="row align-items-center">
+                <table id="PublicTokensTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>@L("Actions")</th>
+								<th>@L("TimeSet")</th>
+								<th>@L("TimeExpire")</th>
+								<th>@L("Token")</th>
+								<th>@L("PrivateKey")</th>
+								<th>@L("DeviceVerificationCode")</th>
+								<th>@L("LastAccessDeviceVerificationCode")</th>
+								<th>@L("IsTokenLocked")</th>
+								<th>@L("NguoiBenhUserName")</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+﻿
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.PublicTokens
+@model PublicTokenViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="PublicTokenInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("TimeSet") :</h6>
+                @Model.PublicToken.TimeSet
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("TimeExpire") :</h6>
+                @Model.PublicToken.TimeExpire
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Token") :</h6>
+                @Model.PublicToken.Token
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("PrivateKey") :</h6>
+                @Model.PublicToken.PrivateKey
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("DeviceVerificationCode") :</h6>
+                @Model.PublicToken.DeviceVerificationCode
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("LastAccessDeviceVerificationCode") :</h6>
+                @Model.PublicToken.LastAccessDeviceVerificationCode
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("IsTokenLocked") :</h6>
+                @Model.PublicToken.IsTokenLocked
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("NguoiBenh")) @L("UserName") :</h6>
+                @Model.NguoiBenhUserName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

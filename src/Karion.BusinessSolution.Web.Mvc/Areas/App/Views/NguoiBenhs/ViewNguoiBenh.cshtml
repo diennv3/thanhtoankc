@@ -1,0 +1,116 @@
+﻿@using Karion.BusinessSolution.Web.Areas.App.Startup
+@using Karion.BusinessSolution.Web.Areas.App.Models.NguoiBenhs
+@model NguoiBenhViewModel
+
+@{
+    ViewBag.CurrentPageName = AppPageNames.Host.NguoiBenhs;
+}
+
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/App/Views/NguoiBenhs/CreateOrEdit.js" asp-append-version="true"></script>
+}
+
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+
+    <div class="kt-subheader kt-grid__item">
+        <div class="@(await GetContainerClass())">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">
+                    <span>@L("Details")</span>
+                </h3>
+                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                <div class="kt-subheader__breadcrumbs">
+                    <a href="/App/NguoiBenhs" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i>&thinsp;@L("NguoiBenhs")</a>
+                    <span class="kt-subheader__breadcrumbs-separator"></span>
+                    <a href="javascript:;" class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
+                        @L("Details")
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+        <div class="kt-portlet kt-portlet--mobile ">
+            <div class="kt-portlet__body ">
+                <div id="NguoiBenhInformationsTab">
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <h6>@L("HoVaTen") :</h6>
+                            @Model.NguoiBenh.HoVaTen
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("BirthDay") :</h6>
+                            @Model.NguoiBenh.NgaySinh
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("GioiTinh") :</h6>
+                            @Model.NguoiBenh.GioiTinh
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("DiaChi") :</h6>
+                            @Model.NguoiBenh.DiaChi
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("UserName") :</h6>
+                            @Model.NguoiBenh.UserName
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("AccessFailedCount") :</h6>
+                            @Model.NguoiBenh.AccessFailedCount
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("PhoneNumber") :</h6>
+                            @Model.NguoiBenh.PhoneNumber
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("EmailAddress") :</h6>
+                            @Model.NguoiBenh.EmailAddress
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("EmailConfirmationCode") :</h6>
+                            @Model.NguoiBenh.EmailConfirmationCode
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("IsActive") :</h6>
+                            @Model.NguoiBenh.IsActive
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("IsEmailConfirmed") :</h6>
+                            @Model.NguoiBenh.IsEmailConfirmed
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("IsPhoneNumberConfirmed") :</h6>
+                            @Model.NguoiBenh.IsPhoneNumberConfirmed
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("PasswordResetCode") :</h6>
+                            @Model.NguoiBenh.PasswordResetCode
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("ProfilePicture") :</h6>
+                            @Model.NguoiBenh.ProfilePicture
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("Password") :</h6>
+                            @Model.NguoiBenh.Password
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("Token") :</h6>
+                            @Model.NguoiBenh.Token
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6>@L("TokenExpire") :</h6>
+                            @Model.NguoiBenh.TokenExpire
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

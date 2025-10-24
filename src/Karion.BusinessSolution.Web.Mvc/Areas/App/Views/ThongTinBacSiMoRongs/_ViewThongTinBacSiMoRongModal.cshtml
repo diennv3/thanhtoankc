@@ -1,0 +1,36 @@
+﻿
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.ThongTinBacSiMoRongs
+@model ThongTinBacSiMoRongViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="ThongTinBacSiMoRongInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("Image") :</h6>
+                @Model.ThongTinBacSiMoRong.Image
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("TieuSu") :</h6>
+                @Model.ThongTinBacSiMoRong.TieuSu
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("ChucDanh") :</h6>
+                @Model.ThongTinBacSiMoRong.ChucDanh
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("User")) @L("Name") :</h6>
+                @Model.UserName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

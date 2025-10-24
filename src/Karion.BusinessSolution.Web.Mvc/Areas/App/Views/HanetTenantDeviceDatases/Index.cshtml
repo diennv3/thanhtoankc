@@ -1,0 +1,130 @@
+﻿@using Karion.BusinessSolution.Authorization
+@using Karion.BusinessSolution.Web.Areas.App.Models.HanetTenantDeviceDatases
+@using Karion.BusinessSolution.Web.Areas.App.Startup
+@model HanetTenantDeviceDatasesViewModel
+@{
+    ViewBag.CurrentPageName = AppPageNames.Host.HanetTenantDeviceDatases;
+}
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/App/Views/HanetTenantDeviceDatases/Index.js" asp-append-version="true"></script>
+}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+
+                <div class="kt-subheader kt-grid__item">
+                  <div class="@(await GetContainerClass())">
+                    <div class="kt-subheader__main">
+                        <h3 class="kt-subheader__title">
+                            <span>@L("HanetTenantDeviceDatases")</span>
+                        </h3>
+                        <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                        <span class="kt-subheader__desc">
+                            @L("HanetTenantDeviceDatasesHeaderInfo")
+                        </span>
+                    </div>
+                    <div class="kt-subheader__toolbar">
+                        <div class="kt-subheader__wrapper">
+                            <button id="ExportToExcelButton" class="btn btn-outline-success"><i class="fa fa-file-excel"></i> @L("ExportToExcel")</button>
+            @if (IsGranted(AppPermissions.Pages_HanetTenantDeviceDatases_Create))
+                            {
+                                <button id="CreateNewHanetTenantDeviceDatasButton" class="btn btn-primary blue"><i class="fa fa-plus"></i> @L("CreateNewHanetTenantDeviceDatas")</button>                
+                            }
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            
+<div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">   
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__body">
+            <div class="kt-form">
+                <div class="row align-items-center mb-4">
+                    <div class="col-xl-12">
+                        <div class="form-group align-items-center">
+                            <div class="input-group">
+                                <input type="text" id="HanetTenantDeviceDatasesTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                                <span class="input-group-btn">
+                                    <button id="GetHanetTenantDeviceDatasesButton" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+                <div id="AdvacedAuditFiltersArea" style="display: none" class="row mb-4">
+                    <div class="col-md-12">
+						<div class="kt-separator kt-separator--border-dashed"></div>
+					</div>
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="deviceIdFilterId">@L("deviceId")</label>
+									<input type="text" class="form-control" name="deviceIdFilter" id="deviceIdFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="deviceNameFilterId">@L("deviceName")</label>
+									<input type="text" class="form-control" name="deviceNameFilter" id="deviceNameFilterId">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<label for="deviceStatusFilterId">@L("deviceStatus")</label>
+								<select class="form-control" name="deviceStatusFilter" id="deviceStatusFilterId">
+									<option value="-1">@L("All")</option>
+									<option value="0">@L("False")</option>
+									<option value="1">@L("True")</option>
+								</select>
+                            </div>
+                            <div class="col-md-3">
+                                    <div class="form-group">
+										<label for="MinlastCheckFilterId">@L("lastCheckRange")</label>
+										<div class="input-group">
+											<input class="form-control m-input date-picker" type="text" placeholder="@L("MinValue")"  id="MinlastCheckFilterId">
+											<span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+											<input class="form-control m-input date-picker" type="text" placeholder="@L("MaxValue")"  id="MaxlastCheckFilterId">
+										</div>
+									</div>
+                            </div>
+                            <div class="col-md-3">
+                                 <div class="form-group">
+									<label  for="MintenantIdFilterId">@L("MinMax") @L("tenantId")</label>
+									<div class="input-group">
+										<input type="number" class="form-control m-input" placeholder="@L("MinValue")" name="mintenantIdFilter" id="MintenantIdFilterId"/>
+                                        <input type="number" class="form-control m-input" placeholder="@L("MaxValue")" name="maxtenantIdFilter"  id="MaxtenantIdFilterId"/>
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="HanetTenantPlaceDatasplaceNameFilterId">(@L("HanetTenantPlaceDatas")) @L("placeName")</label>
+									<input type="text" class="form-control" name="hanetTenantPlaceDatasplaceNameFilter" id="HanetTenantPlaceDatasplaceNameFilterId">
+								</div>
+                            </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-xl-12">
+                        <span id="ShowAdvancedFiltersSpan" class="text-muted clickable-item"><i class="fa fa-angle-down"></i> @L("ShowAdvancedFilters")</span>
+                        <span id="HideAdvancedFiltersSpan" class="text-muted clickable-item" style="display: none"><i class="fa fa-angle-up"></i> @L("HideAdvancedFilters")</span>
+                    </div>
+                </div>
+            <div class="row align-items-center">
+                <table id="HanetTenantDeviceDatasesTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>@L("Actions")</th>
+								<th>@L("deviceId")</th>
+								<th>@L("deviceName")</th>
+								<th>@L("deviceStatus")</th>
+								<th>@L("lastCheck")</th>
+								<th>@L("tenantId")</th>
+								<th>@L("HanetTenantPlaceDatasplaceName")</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

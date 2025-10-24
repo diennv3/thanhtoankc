@@ -1,0 +1,44 @@
+﻿
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.HanetTenantDeviceDatases
+@model HanetTenantDeviceDatasViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="HanetTenantDeviceDatasInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("deviceId") :</h6>
+                @Model.HanetTenantDeviceDatas.deviceId
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("deviceName") :</h6>
+                @Model.HanetTenantDeviceDatas.deviceName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("deviceStatus") :</h6>
+                @Model.HanetTenantDeviceDatas.deviceStatus
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("lastCheck") :</h6>
+                @Model.HanetTenantDeviceDatas.lastCheck
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("tenantId") :</h6>
+                @Model.HanetTenantDeviceDatas.tenantId
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("HanetTenantPlaceDatas")) @L("placeName") :</h6>
+                @Model.HanetTenantPlaceDatasplaceName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

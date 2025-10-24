@@ -1,0 +1,17 @@
+﻿@model int
+<div class="modal-header">
+    <h5 class="modal-title">Cập nhật ảnh đại diện</h5>
+</div>
+<div class="modal-body">
+    <form id="UpdateImageProfileForm" enctype="multipart/form-data">
+        <input type="hidden" name="NguoiBenhId" value="@Model" />
+        <div class="form-group">
+            <label>Chọn ảnh đại diện:</label>
+            <input type="file" name="profileImage" accept="image/*" class="form-control" required />
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" id="btnSaveImageProfile">Lưu</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+</div>

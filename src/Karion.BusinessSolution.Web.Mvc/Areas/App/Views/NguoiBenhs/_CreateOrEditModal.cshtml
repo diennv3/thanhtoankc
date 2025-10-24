@@ -1,0 +1,104 @@
+﻿@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.NguoiBenhs
+@using Karion.BusinessSolution.QuanLyDanhMuc
+@model CreateOrEditNguoiBenhModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditNguoiBenh")) : L("CreateNewNguoiBenh")))
+
+<div class="modal-body">
+    <form name="NguoiBenhInformationsForm" role="form" novalidate class="form-validation">
+        @if (Model.IsEditMode)
+        {
+<input type="hidden" name="id" value="@Model.NguoiBenh.Id" />}
+
+        <div class="row">
+            <div class="col-sm-4 text-center mb-3">
+                <img src="@(string.IsNullOrEmpty(Model.NguoiBenh.ProfilePicture) ? Url.Content("~/Common/Images/default-profile-picture.png") : Model.NguoiBenh.ProfilePicture)" width="128" height="128" class="img-thumbnail" />
+            </div>
+            <div class="col-sm-8">
+                <div class="form-group">
+                    <label>@L("HoVaTen")</label>
+                    <input class="form-control" name="hoVaTen" value="@Model.NguoiBenh.HoVaTen" required />
+                </div>
+                <div class="form-group">
+                    <label>@L("GioiTinh")</label>
+                    <input class="form-control" name="gioiTinh" value="@Model.NguoiBenh.GioiTinh" />
+                </div>
+                <div class="form-group">
+                    <label>Ngày sinh</label>
+                    <input class="form-control" type="number" name="ngaySinh" value="@Model.NguoiBenh.NgaySinh" min="1" max="31" />
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label>Tháng sinh</label>
+                        <input class="form-control" type="number" name="thangSinh" value="@Model.NguoiBenh.ThangSinh" min="1" max="12" />
+                    </div>
+                    <div class="form-group col">
+                        <label>Năm sinh</label>
+                        <input class="form-control" type="number" name="namSinh" value="@Model.NguoiBenh.NamSinh" min="1900" max="@DateTime.Now.Year" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>@L("DiaChi")</label>
+                    <input class="form-control" name="diaChi" value="@Model.NguoiBenh.DiaChi" />
+                </div>
+                <div class="form-group">
+                    <label>@L("UserName")</label>
+                    <input class="form-control" name="userName" value="@Model.NguoiBenh.UserName" required />
+                </div>
+                <div class="form-group">
+                    <label>@L("PhoneNumber")</label>
+                    <input class="form-control" name="phoneNumber" value="@Model.NguoiBenh.PhoneNumber" required />
+                </div>
+                <div class="form-group">
+                    <label>@L("EmailAddress")</label>
+                    <input class="form-control" type="email" name="emailAddress" value="@Model.NguoiBenh.EmailAddress" />
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label>@L("Password")</label>
+                        <input class="form-control" name="password" type="password" autocomplete="new-password"
+                               placeholder="@(Model.IsEditMode ? L("Để trống nếu không có thay đổi") : L("Nhập mật khẩu"))"
+                               @(Model.IsEditMode ? "" : "required") />
+                    </div>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="isActive" value="true" id="NguoiBenh_IsActive" @(Model.NguoiBenh.IsActive ? "checked" : "") />
+                    <label class="form-check-label" for="NguoiBenh_IsActive">@L("IsActive")</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="isEmailConfirmed" value="true" id="NguoiBenh_IsEmailConfirmed" @(Model.NguoiBenh.IsEmailConfirmed ? "checked" : "") />
+                    <label class="form-check-label" for="NguoiBenh_IsEmailConfirmed">@L("IsEmailConfirmed")</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="isPhoneNumberConfirmed" value="true" id="NguoiBenh_IsPhoneNumberConfirmed" @(Model.NguoiBenh.IsPhoneNumberConfirmed ? "checked" : "") />
+                    <label class="form-check-label" for="NguoiBenh_IsPhoneNumberConfirmed">@L("IsPhoneNumberConfirmed")</label>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <h5>Phân ca (Shift)</h5>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label>Chọn ca (Assigned Shift)</label>
+                <select class="form-control" id="AssignedShiftId" name="AssignedShiftId">
+                    <option value="">-- Không chọn (dùng cấu hình chung) --</option>
+                </select>
+                <small class="form-text text-muted">Gán ca cho nhân viên. Nếu bỏ trống sẽ dùng cấu hình chung đơn vị.</small>
+            </div>
+            <div class="form-group col-md-6 d-flex align-items-end">
+                <div>
+                    <button type="button" id="ManageShiftsBtn" class="btn btn-outline-primary">Quản lý ca</button>
+                    <small class="form-text text-muted">Trình quản lý ca làm việc.</small>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

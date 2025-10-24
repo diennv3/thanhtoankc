@@ -1,0 +1,66 @@
+﻿@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.Shifts
+@model CreateOrEditShiftModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditShift")) : L("CreateNewShift")))
+
+<div class="modal-body">
+    <div id="ShiftInformationsTab">
+        <form name="ShiftInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+                <input type="hidden" name="id" value="@Model.Shift.Id" />
+            }
+
+            <div class="form-group">
+                <label for="Shift_Code">@L("Code")</label>
+                <input class="form-control" id="Shift_Code" value="@Model.Shift.Code" type="text" name="code" maxlength="@Karion.BusinessSolution.QuanLyDanhMuc.ShiftConsts.MaxCodeLength" minlength="@Karion.BusinessSolution.QuanLyDanhMuc.ShiftConsts.MinCodeLength" />
+            </div>
+
+            <div class="form-group">
+                <label for="Shift_Name">@L("Name")</label>
+                <input class="form-control" id="Shift_Name" value="@Model.Shift.Name" type="text" name="name" maxlength="@Karion.BusinessSolution.QuanLyDanhMuc.ShiftConsts.MaxNameLength" minlength="@Karion.BusinessSolution.QuanLyDanhMuc.ShiftConsts.MinNameLength" />
+            </div>
+
+            <div class="form-group">
+                <label for="Shift_StartTime">@L("StartTime")</label>
+                <input class="form-control" id="Shift_StartTime" type="time" name="startTime" value="@Model.Shift.StartTime.ToString(@"hh\:mm")" />
+            </div>
+
+            <div class="form-group">
+                <label for="Shift_EndTime">@L("EndTime")</label>
+                <input class="form-control" id="Shift_EndTime" type="time" name="endTime" value="@Model.Shift.EndTime.ToString(@"hh\:mm")" />
+            </div>
+
+            <div class="form-group">
+                <label for="Shift_WorkDaysMask">@L("WorkDaysMask")</label>
+                <input class="form-control m-input" id="Shift_WorkDaysMask" 
+                       value="@Model.Shift.WorkDaysMask?.ToString(CultureInfo.InvariantCulture)" 
+                       type="number" name="workDaysMask" />
+            </div>
+
+            <div class="form-group">
+                <label for="Shift_ToleranceMinutes">@L("ToleranceMinutes")</label>
+                <input class="form-control m-input" id="Shift_ToleranceMinutes" value="@Model.Shift.ToleranceMinutes.ToString(CultureInfo.InvariantCulture)" type="number" name="toleranceMinutes" />
+            </div>
+
+            <div class="m-checkbox-list">
+                <label for="Shift_IsActive" class="kt-checkbox">
+                    <input id="Shift_IsActive" type="checkbox" name="isActive" value="true" @Html.Raw(Model.Shift.IsActive ?"checked=\"checked\"":"") />
+                    @L("IsActive")
+                    <span></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="Shift_Description">@L("Description")</label>
+                <input class="form-control" id="Shift_Description" value="@Model.Shift.Description" type="text" name="description" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

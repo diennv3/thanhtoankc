@@ -1,0 +1,36 @@
+﻿
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.BankCodes
+@model CreateOrEditBankCodeModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditBankCode")) : L("CreateNewBankCode")))
+
+<div class="modal-body">
+        <div id="BankCodeInformationsTab">
+            <form name="BankCodeInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.BankCode.Id" />
+                }
+
+				
+
+				
+								<div class="form-group">
+									<label for="BankCode_Code">@L("Code")</label>
+									<input class="form-control" id="BankCode_Code" value="@Model.BankCode.Code" type="text" name="code"  required    />
+								</div>
+					
+								<div class="form-group">
+									<label for="BankCode_BankName">@L("BankName")</label>
+									<input class="form-control" id="BankCode_BankName" value="@Model.BankCode.BankName" type="text" name="bankName"  required    />
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

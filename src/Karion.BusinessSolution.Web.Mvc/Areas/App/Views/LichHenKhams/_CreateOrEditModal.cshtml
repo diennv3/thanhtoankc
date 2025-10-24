@@ -1,0 +1,279 @@
+﻿@using System.Globalization
+@using GraphQL
+@using Karion.BusinessSolution.Dto
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.LichHenKhams
+@using Microsoft.EntityFrameworkCore
+@using NPOI.SS.Formula.Functions
+@model CreateOrEditLichHenKhamModalViewModel
+<style>
+    input:checked + label{
+    	border: 1px solid #333;
+    	background-color: #2fcc71;  
+    }
+    input:checked + label:after{
+    	content: "\2713";
+    	width: 30px;
+    	height: 30px;
+    	line-height: 30px;
+    	border-radius: 100%;
+    	border: 1px solid #333;
+    	background-color: #2fcc71;
+    	z-index: 999;
+    	position: absolute;
+    	top: -10px;
+    	right: -10px;
+    }
+</style>
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditLichHenKham")) : L("CreateNewLichHenKham")))
+
+<div class="modal-body">
+<div id="LichHenKhamInformationsTab">
+<form name="LichHenKhamInformationsForm" role="form" novalidate class="form-validation">
+@if (Model.IsEditMode)
+{
+    <input type="hidden" name="id" value="@Model.LichHenKham.Id"/>
+}
+<div class="row">
+<div class="col-4">
+    <div class="form-group m-form__group">    
+        <label for="NguoiBenhUserName">@L("NguoiBenhs") <i style="color:red ">(*)</i></label>
+        <div class="input-group">
+            <input class="form-control" id="NguoiBenhUserName" name="nguoiBenhUserName" value="@Model.NguoiBenhUserName" type="text" disabled>
+            <div class="input-group-append">
+                <button class="btn btn-primary blue" id="OpenNguoiBenhLookupTableButton" type="button">
+                    <i class="fa fa-search"></i> @L("Pick")</button>
+            </div>
+            <div class="input-group-prepend">
+                <button class="btn btn-danger btn-icon" type="button" id="ClearNguoiBenhUserNameButton">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.IsEditMode)
+    {
+        <input class="form-control" id="LichHenKham_NguoiBenhId" value="@Model.LichHenKham.NguoiBenhId" type="text" name="nguoiBenhId" hidden/>
+    }
+    else
+    {
+        <input class="form-control" id="LichHenKham_NguoiBenhId" value="" type="text" name="nguoiBenhId" hidden/>
+    }
+
+    <div class="form-group m-form__group">
+        <label for="ChuyenKhoaTen">@L("ChuyenKhoa") <i style="color:red ">(*)</i></label>
+        <div class="input-group">
+            <input class="form-control" id="ChuyenKhoaTen" name="chuyenKhoaTen" value="@Model.ChuyenKhoaTen" type="text" disabled>
+            <div class="input-group-append">
+                <button class="btn btn-primary blue" id="OpenChuyenKhoaLookupTableButton" type="button">
+                    <i class="fa fa-search"></i> @L("Pick")</button>
+            </div>
+            <div class="input-group-prepend">
+                <button class="btn btn-danger btn-icon" type="button" id="ClearChuyenKhoaTenButton">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    @if (Model.IsEditMode)
+    {
+        <input class="form-control" id="LichHenKham_ChuyenKhoaId" value="@Model.LichHenKham.ChuyenKhoaId" type="text" name="chuyenKhoaId" hidden/>
+    }
+    else
+    {
+        <input class="form-control" id="LichHenKham_ChuyenKhoaId" value="" type="text" name="chuyenKhoaId" hidden/>
+    }
+
+    <div class="form-group">
+        <label for="LichHenKham_NgayHenKham">@L("NgayHenKham") <i style="color:red ">(*)</i></label>
+        <input class="form-control m-input date-picker" id="LichHenKham_NgayHenKham" type="text" name="ngayHenKham" value="@Model.LichHenKham.NgayHenKham"/>
+    </div>
+    
+</div>
+<div class="col-4">
+    <div class="form-group m-form__group">
+        <label for="NguoiThanHoVaTen">@L("NguoiThan")</label>
+        <div class="input-group">
+            <input class="form-control" id="NguoiThanHoVaTen" name="nguoiThanHoVaTen" value="@Model.NguoiThanHoVaTen" type="text" disabled>
+            <div class="input-group-append">
+                <button class="btn btn-primary blue" id="OpenNguoiThanLookupTableButton" type="button">
+                    <i class="fa fa-search"></i> @L("Pick")</button>
+            </div>
+            <div class="input-group-prepend">
+                <button class="btn btn-danger btn-icon" type="button" id="ClearNguoiThanHoVaTenButton">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.IsEditMode)
+    {
+        <input class="form-control" id="LichHenKham_NguoiThanId" value="@Model.LichHenKham.NguoiThanId" type="text" name="nguoiThanId" hidden/>
+    }
+    else
+    {
+        <input class="form-control" id="LichHenKham_NguoiThanId" value="" type="text" name="nguoiThanId" hidden/>
+    }
+
+    <div class="form-group m-form__group">
+        <label for="UserName">@L("BacSiChiDinh")</label>
+        <div class="input-group">
+            <input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
+            <div class="input-group-append">
+                <button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button">
+                    <i class="fa fa-search"></i> @L("Pick")</button>
+            </div>
+            <div class="input-group-prepend">
+                <button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.IsEditMode)
+    {
+        <input class="form-control" id="LichHenKham_BacSiId" value="@Model.LichHenKham.BacSiId" type="text" name="bacSiId" hidden/>
+    }
+    else
+    {
+        <input class="form-control" id="LichHenKham_BacSiId" value="" type="text" name="bacSiId" hidden/>
+    }
+    
+        <div class="form-group">
+            <label for="LichHenKham_MoTaTrieuChung">@L("MoTaTrieuChung") <i style="color:red ">(*)</i></label>
+            <input class="form-control" id="LichHenKham_MoTaTrieuChung" value="@Model.LichHenKham.MoTaTrieuChung" type="text" name="moTaTrieuChung" required/>
+        </div>
+    
+</div>
+<div class="col-4">
+
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="LichHenKham_PhuongThucThanhToan">@L("PhuongThucThanhToan")</label>
+                @* <input class="form-control m-input" id="LichHenKham_PhuongThucThanhToan" value="@Model.LichHenKham.PhuongThucThanhToan.ToString(CultureInfo.InvariantCulture)" type="number" name="phuongThucThanhToan"/> *@
+                @Html.DropDownList("phuongThucThanhToan", new SelectList(new List<SelectListItem>
+                {
+                    new SelectListItem {Text = L("TienMat"), Value = "1"},
+                    new SelectListItem {Text = L("ChuyenKhoan"), Value = "2"}
+                }, "Value", "Text", @Model.IsEditMode ? Model.LichHenKham.PhuongThucThanhToan.ToString(CultureInfo.InvariantCulture) : "2"), new {@class = "form-control", id = "LichHenKham_PhuongThucThanhToan"})
+            </div>
+        </div>
+        <div class="col-6">
+            @* <div class="m-checkbox-list"> *@
+            @*     <label for="LichHenKham_IsCoBHYT" class="kt-checkbox"> *@
+            @*         <input id="LichHenKham_IsCoBHYT" type="checkbox" name="isCoBHYT" value="true" @Html.Raw(Model.LichHenKham.IsCoBHYT ? "checked=\"checked\"" : "")/> *@
+            @*         @L("IsCoBHYT") *@
+            @*         <span></span> *@
+            @*     </label> *@
+            @* </div> *@
+            <div class="form-group">
+                <label for="LichHenKham_IsCoBHYT">@L("KhamBHYT")</label>
+                @Html.DropDownList("isCoBHYT", new SelectList(new List<SelectListItem>
+                {
+                    new SelectListItem {Text = L("KhongBHYT"), Value = "false"},
+                    new SelectListItem {Text = L("CoBHYT"), Value = "true"}
+                }, "Value", "Text", @Model.IsEditMode ? Model.LichHenKham.IsCoBHYT.ToString(CultureInfo.InvariantCulture) : "false"), new {@class = "form-control", id = "LichHenKham_IsCoBHYT"})
+            </div>
+        </div>
+    </div>
+    <div id="aaa" hidden>
+          <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="LichHenKham_SoTheBHYT">@L("SoTheBHYT")</label>
+                        <input class="form-control" id="LichHenKham_SoTheBHYT" value="@Model.LichHenKham.SoTheBHYT" type="text" name="soTheBHYT"/>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="LichHenKham_BHYTValidDate">@L("BHYTValidDate")</label>
+                        <input class="form-control m-input date-picker" id="LichHenKham_BHYTValidDate" type="text" name="bhytValidDate" value="@Model.LichHenKham.BHYTValidDate"/>
+                    </div>
+                </div>
+            </div>
+          <div class="form-group">
+                <label for="LichHenKham_NoiDangKyKCBDauTien">@L("NoiDangKyKCBDauTien")</label>
+                <input class="form-control" id="LichHenKham_NoiDangKyKCBDauTien" value="@Model.LichHenKham.NoiDangKyKCBDauTien" type="text" name="noiDangKyKCBDauTien"/>
+            </div>
+    </div>
+  
+    @* <div class="form-group m-form__group"> *@
+    @*     <label for="DichVuTen">@L("DichVu")</label> *@
+    @*     <div class="input-group"> *@
+    @*         <input class="form-control" id="DichVuTen" name="dichVuTen" value="@Model.DichVuTen" type="text" disabled> *@
+    @*         <div class="input-group-append"> *@
+    @*             <button class="btn btn-primary blue" id="OpenDichVuLookupTableButton" type="button"> *@
+    @*                 <i class="fa fa-search"></i> @L("Pick")</button> *@
+    @*         </div> *@
+    @*         <div class="input-group-prepend"> *@
+    @*             <button class="btn btn-danger btn-icon" type="button" id="ClearDichVuTenButton"> *@
+    @*                 <i class="fa fa-times"></i> *@
+    @*             </button> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </div> *@
+    @* <div class="form-group"> *@
+    @*     <label for="LichHenKham_TimeHoanThanhKham">@L("TimeHoanThanhKham")</label> *@
+    @*     <input class="form-control m-input date-picker" id="LichHenKham_TimeHoanThanhKham" type="text" name="timeHoanThanhKham" value="@Model.LichHenKham.TimeHoanThanhKham"/> *@
+    @* </div> *@
+    @* *@
+    @* <div class="form-group"> *@
+    @*     <label for="LichHenKham_TimeHoanThanhThanhToan">@L("TimeHoanThanhThanhToan")</label> *@
+    @*     <input class="form-control m-input date-picker" id="LichHenKham_TimeHoanThanhThanhToan" type="text" name="timeHoanThanhThanhToan" value="@Model.LichHenKham.TimeHoanThanhThanhToan"/> *@
+    @* </div> *@
+    @* <div class="m-checkbox-list"> *@
+    @*     <label for="LichHenKham_IsDaKham" class="kt-checkbox"> *@
+    @*         <input id="LichHenKham_IsDaKham" type="checkbox" name="isDaKham" value="true" @Html.Raw(Model.LichHenKham.IsDaKham ? "checked=\"checked\"" : "")/> *@
+    @*         @L("IsDaKham") *@
+    @*         <span></span> *@
+    @*     </label> *@
+    @* </div> *@
+    @* *@
+    @* <div class="m-checkbox-list"> *@
+    @*     <label for="LichHenKham_IsDaThanhToan" class="kt-checkbox"> *@
+    @*         <input id="LichHenKham_IsDaThanhToan" type="checkbox" name="isDaThanhToan" value="true" @Html.Raw(Model.LichHenKham.IsDaThanhToan ? "checked=\"checked\"" : "")/> *@
+    @*         @L("IsDaThanhToan") *@
+    @*         <span></span> *@
+    @*     </label> *@
+    @* </div> *@
+    @*               <div class="form-group m-form__group"> *@
+    @*                   <label for="UserName2">@L("ThuNgan")</label> *@
+    @*                   <div class="input-group"> *@
+    @*                       <input class="form-control" id="UserName2" name="userName2" value="@Model.UserName2" type="text" disabled> *@
+    @*                       <div class="input-group-append"> *@
+    @*                           <button class="btn btn-primary blue" id="OpenUser2LookupTableButton" type="button"> *@
+    @*                               <i class="fa fa-search"></i> @L("Pick")</button> *@
+    @*                       </div> *@
+    @*                       <div class="input-group-prepend"> *@
+    @*                           <button class="btn btn-danger btn-icon" type="button" id="ClearUserName2Button"> *@
+    @*                               <i class="fa fa-times"></i> *@
+    @*                           </button> *@
+    @*                       </div> *@
+    @*                   </div> *@
+    @*               </div> *@
+    @* *@
+    @*               @if (Model.IsEditMode) *@
+    @*               { *@
+    @*                   <input class="form-control" id="LichHenKham_ThuNganId" value="@Model.LichHenKham.ThuNganId" type="text" name="thuNganId" hidden/> *@
+    @*               } *@
+    @*               else *@
+    @*               { *@
+    @*                   <input class="form-control" id="LichHenKham_ThuNganId" value="" type="text" name="thuNganId" hidden/> *@
+    @*               } *@
+</div>
+</div>
+<div class="row">
+    
+</div>
+<div class="row">
+    <div id="hienKhungKham" class="row form-group"></div>
+</div>
+</form>
+</div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

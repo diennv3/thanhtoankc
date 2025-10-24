@@ -1,0 +1,225 @@
+﻿@using Karion.BusinessSolution.Localization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Startup
+@using Karion.BusinessSolution.Web.Areas.App.Models.CustomizableDashboard
+@using Karion.BusinessSolution.Web.DashboardCustomization
+@using Karion.BusinessSolution.Web.Resources
+@inject IWebResourceManager WebResourceManager
+@inject DashboardViewConfiguration DashboardViewConfiguration
+@model CustomizableDashboardViewModel
+
+@{
+    ViewBag.CurrentPageName = AppPageNames.Host.Dashboard;
+    var allModelWidgetFilterOutputs = Model.DashboardOutput.Widgets.SelectMany(widgets => widgets.Filters).GroupBy(filter => filter.Id).Select(filters => filters.First()).ToList();
+}
+
+@section Styles {
+    <link abp-href="/assets/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" abp-href="/view-resources/Areas/App/Views/_Bundles/customizable-dashboard-libs.css" asp-append-version="true" />
+    @foreach (var widget in Model.DashboardOutput.Widgets)
+    {
+        var widgetViewDefinition = DashboardViewConfiguration.WidgetViewDefinitions[widget.Id];
+        if (!string.IsNullOrEmpty(widgetViewDefinition.CssFile) && Model.UserDashboard.Pages != null && Model.UserDashboard.Pages.Any(p => p.Widgets != null && p.Widgets.Any(w => widgetViewDefinition.Id == w.WidgetId)))
+        {
+            <link rel="stylesheet" abp-href="/view-resources@(widgetViewDefinition.CssFile)" asp-append-version="true" />
+        }
+    }
+
+    @if (allModelWidgetFilterOutputs.Any())
+    {
+        foreach (var widgetFilter in allModelWidgetFilterOutputs)
+        {
+            var widgetFilterViewDefinition = DashboardViewConfiguration.WidgetFilterViewDefinitions[widgetFilter.Id];
+            if (!string.IsNullOrEmpty(widgetFilterViewDefinition.CssFile))
+            {
+                <link rel="stylesheet" abp-href="/view-resources@(widgetFilterViewDefinition.CssFile)" asp-append-version="true" />
+            }
+        }
+    }
+}
+
+<style>
+    table.table-bordered { border-collapse: collapse; width:100%; background:#fff; }
+    table.table-bordered th, table.table-bordered td { border:1px solid #dcdfe6 !important; padding:6px; text-align:center; vertical-align:middle; font-size:13px; }
+    table.table-bordered thead th { background:#f5f7fa; font-weight:700; color:#222; }
+    .small-cell { width:36px; height:34px; padding:2px; font-size:12px; white-space:nowrap; }
+
+    .cell-present { background:#e6f7ea; }
+    .cell-absent { background:#f4f6f8; color:#999; }
+    .cell-late { background:#fff4e6; color:#b25a00; }
+    .cell-early { background:#fff4f6; color:#b2002d; }
+    .cell-ot { background:#e9f0ff; }
+
+    .month-header { background:#fafbfc; font-weight:700; color:#333; }
+    .legend { font-size:13px; color:#444; }
+    .signature { margin-top:28px; display:flex; justify-content:space-between; align-items:center; }
+    
+</style>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script abp-src="/assets/jquery-ui-1.12.1/jquery-ui.js" asp-append-version="true"></script>
+    <script abp-src="/view-resources/Areas/App/Views/_Bundles/customizable-dashboard-libs.js" asp-append-version="true"></script>
+    <script abp-src="/Common/Scripts/tenantdashboard.js"></script>
+    @WebResourceManager.RenderScripts()
+
+    @foreach (var widget in Model.DashboardOutput.Widgets)
+    {
+        var widgetViewDefinition = DashboardViewConfiguration.WidgetViewDefinitions[widget.Id];
+        if (!string.IsNullOrEmpty(widgetViewDefinition.JavascriptFile) && Model.UserDashboard.Pages != null && Model.UserDashboard.Pages.Any(p => p.Widgets != null && p.Widgets.Any(w => widgetViewDefinition.Id == w.WidgetId)))
+        {
+            <script src="/view-resources@(widgetViewDefinition.JavascriptFile)"></script>
+        }
+    }
+
+    @foreach (var widgetFilter in allModelWidgetFilterOutputs)
+    {
+        var widgetFilterViewDefinition = DashboardViewConfiguration.WidgetFilterViewDefinitions[widgetFilter.Id];
+        if (!string.IsNullOrEmpty(widgetFilterViewDefinition.JavascriptFile))
+        {
+            <script src="/view-resources@(widgetFilterViewDefinition.JavascriptFile)"></script>
+        }
+    }
+}
+<input hidden id="DashboardName" value="@Model.DashboardOutput.Name" />
+
+<div class="kt-content kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+    <div class="kt-subheader kt-grid__item">
+        <div class="kt-container kt-container--fluid">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title"><span>Hệ thống quản lý điểm danh</span></h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid pt-3">
+        <div class="row mb-3">
+            <div class="col-md-3 form-group">
+                <label>Chọn nhân viên</label>
+                <select class="form-control" id="chonnhanvien"></select>
+            </div>
+            <div class="col-md-2 form-group">
+                <label>Loại báo cáo</label>
+                <select class="form-control" id="loaiBaoCao">
+                    <option value="1">Ngày</option>
+                    <option value="2">Tháng</option>
+                    <option value="3">Năm</option>
+                </select>
+            </div>
+            <div class="col-md-2 form-group">
+                <label>Từ ngày</label>
+                <input type="date" class="form-control" id="tuNgay"/>
+            </div>
+            <div class="col-md-2 form-group">
+                <label>Đến ngày</label>
+                <input type="date" class="form-control" id="denNgay"/>
+            </div>
+            <div class="col-md-2 form-group align-self-end">
+                <button id="btnBaoCaoCong" class="btn btn-info w-100">Xem báo cáo</button>
+            </div>
+        </div>
+
+        <div id="baoCaoCongContainer">
+            <div id="viewAll" style="display:none" class="mb-4">
+                <b>BẢNG TỔNG HỢP TẤT CẢ NHÂN VIÊN</b>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th>Nhân viên</th>
+                                <th>Ngày đi làm</th>
+                                <th>Ngày nghỉ</th>
+                                <th>Ngày đi muộn</th>
+                                <th>Ngày về sớm</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bangTongHopBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="viewOne" style="display:none" class="mb-4">
+                <b>BẢNG CHI TIẾT TỪNG KỲ</b>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th style="min-width:140px">Kỳ</th>
+                                <th>Trạng thái</th>
+                                <th>Phân ca</th>
+                                <th>Tên ca</th>
+                                <th>Đi trễ (phút)</th>
+                                <th>Về sớm (phút)</th>
+                                <th>Tăng ca (giờ)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bangChamCongBody"></tbody>
+                    </table>
+                </div>
+                <div class="mt-2">
+                    <b>Tổng ngày đi làm:</b> <span id="tongNgayLam"></span> &nbsp;
+                    <b>Tổng ngày nghỉ:</b> <span id="tongNgayNghi"></span> &nbsp;
+                    <b>Đi muộn:</b> <span id="soNgayDiTre"></span> &nbsp;
+                    <b>Về sớm:</b> <span id="soNgayVeSom"></span>
+                </div>
+            </div>
+
+            <div id="viewMonth" style="display:none" class="mb-4">
+                <b>BẢNG CHẤM CÔNG THEO THÁNG</b>
+                <div class="small text-muted mb-2" id="monthLabel"></div>
+                <div class="table-responsive" style="overflow-x:auto;">
+                    <table id="monthlyTable" class="table table-bordered table-sm" style="white-space:nowrap;">
+                        <thead id="monthlyHead"></thead>
+                        <tbody id="monthlyBody"></tbody>
+                        <tfoot id="monthlyFoot"></tfoot>
+                    </table>
+                </div>
+
+                @* <div class="legend mt-3"> *@
+                @*     <span style="display:inline-block;width:14px;height:14px;border:1px solid #ddd;background:#e6f7ea;margin-right:6px;"></span> Làm *@
+                @*     <span style="display:inline-block;width:14px;height:14px;border:1px solid #ddd;background:#f4f6f8;margin:0 6px 0 12px;"></span> Nghỉ *@
+                @*     <span style="display:inline-block;width:14px;height:14px;border:1px solid #ddd;background:#fff4e6;margin:0 6px 0 12px;"></span> Đi trễ *@
+                @*     <span style="display:inline-block;width:14px;height:14px;border:1px solid #ddd;background:#fff4f6;margin:0 6px 0 12px;"></span> Về sớm *@
+                @*     <span style="display:inline-block;width:14px;height:14px;border:1px solid #ddd;background:#e9f0ff;margin:0 6px 0 12px;"></span> Tăng ca *@
+                @* </div> *@
+
+                @* <div class="signature"> *@
+                @*     <div class="small text-muted">Ghi chú: P = Đi làm, N = Nghỉ, T = Đi trễ, VS = Về sớm, OT = Tăng ca</div> *@
+                @*     <div class="text-right small">Người lập báo cáo: ____________________</div> *@
+                @* </div> *@
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (allModelWidgetFilterOutputs.Any())
+{
+    <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("DashboardFilters")))
+                <div class="modal-body">
+                    @for (int i = 0; i < allModelWidgetFilterOutputs.Count; i++)
+                    {
+                        <div class="row">
+                            @{
+                                var widgetFilterOutput = allModelWidgetFilterOutputs[i];
+                                var filterViewDefinition = DashboardViewConfiguration.WidgetFilterViewDefinitions[widgetFilterOutput.Id];
+                                <h6 style="margin-left: 10px;">@L(widgetFilterOutput.Name)</h6>
+                                <div class="col-md-12">
+                                    @await Html.PartialAsync(filterViewDefinition.ViewFile)
+                                </div>
+                            }
+                        </div>
+
+                        @if (i != allModelWidgetFilterOutputs.Count - 1)
+                        {
+                            <hr />
+                        }
+                    }
+                </div>
+                @await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+            </div>
+        </div>
+    </div>
+}

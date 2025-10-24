@@ -1,0 +1,40 @@
+﻿
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.NguoiBenhNotifications
+@model NguoiBenhNotificationViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="NguoiBenhNotificationInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("NoiDungTinNhan") :</h6>
+                @Model.NguoiBenhNotification.NoiDungTinNhan
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("TrangThai") :</h6>
+                @Model.NguoiBenhNotification.TrangThai
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("TieuDe") :</h6>
+                @Model.NguoiBenhNotification.TieuDe
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("ThoiGianGui") :</h6>
+                @Model.NguoiBenhNotification.ThoiGianGui
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("NguoiBenh")) @L("UserName") :</h6>
+                @Model.NguoiBenhUserName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

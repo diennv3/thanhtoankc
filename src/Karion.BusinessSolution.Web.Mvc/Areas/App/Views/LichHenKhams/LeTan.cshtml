@@ -1,0 +1,243 @@
+﻿@using Karion.BusinessSolution.Authorization
+@using Karion.BusinessSolution.Web.Areas.App.Models.LichHenKhams
+@using Karion.BusinessSolution.Web.Areas.App.Startup
+@model LichHenKhamsViewModel
+@{
+    ViewBag.CurrentPageName = AppPageNames.Common.LeTan;
+}
+
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/App/Views/LichHenKhams/Index.js" asp-append-version="true"></script>
+}
+
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+<div class="kt-subheader kt-grid__item">
+    <div class="@(await GetContainerClass())">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">
+                <span>@L("BoPhanTiepDon")</span>
+            </h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">
+                @L("LeTan")
+            </span>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+                <button id="ExportToExcelButton" class="btn btn-outline-success">
+                    <i class="fa fa-file-excel"></i> @L("ExportToExcel")
+                </button>
+                @if (IsGranted(AppPermissions.Pages_LichHenKhams_Create))
+                {
+                    <button id="CreateNewLichHenKhamButton" class="btn btn-primary blue">
+                        <i class="fa fa-plus"></i> @L("CreateNewLichHenKham")
+                    </button>
+                }
+                @* <button id="testAPI" class="btn btn-primary blue">TestAPI</button> *@
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="@(await GetContainerClass()) kt-grid__item kt-grid__item--fluid">
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__body">
+            <div class="kt-form">
+                <div class="row align-items-center mb-4">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="MinNgayHenKhamFilterId">@L("NgayHenKham")</label>
+                            <div class="input-group">
+                                <input class="form-control m-input date-picker" type="text" placeholder="@L("TuNgay")" id="MinNgayHenKhamFilterId">
+                                <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                <input class="form-control m-input date-picker" type="text" placeholder="@L("DenNgay")" id="MaxNgayHenKhamFilterId">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2" hidden>
+                        <div class="form-group">
+                            <label for="MinTimeHoanThanhKhamFilterId">@L("ThoiGianHoanThanhKham")</label>
+                            <div class="input-group">
+                                <input class="form-control m-input date-picker" type="text" placeholder="@L("TuNgay")" id="MinTimeHoanThanhKhamFilterId">
+                                <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                <input class="form-control m-input date-picker" type="text" placeholder="@L("DenNgay")" id="MaxTimeHoanThanhKhamFilterId">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2" hidden>
+                        <div class="form-group">
+                            <label for="IsDaKhamFilterId">@L("TinhTrangKham")</label>
+                            <select class="form-control" name="IsDaKhamFilter" id="IsDaKhamFilterId">
+                                <option value="-1">@L("All")</option>
+                                <option value="0">@L("ChuaKham")</option>
+                                <option value="1">@L("DaKham")</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="UserNameFilterId">@L("BacSiKham")</label>
+                            <input type="text" class="form-control" name="userNameFilter" id="UserNameFilterId">
+                        </div>
+                    </div>
+                    @*<div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="DichVuTenFilterId">@L("DichVuKham")</label>
+                                    <input type="text" class="form-control" name="dichVuTenFilter" id="DichVuTenFilterId">
+                                </div>
+                            </div>*@
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="ChuyenKhoaTenFilterId">@L("ChuyenKhoa")</label>
+                            <input type="text" class="form-control" name="chuyenKhoaTenFilter" id="ChuyenKhoaTenFilterId">
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="NguoiBenhUserNameFilterId">@L("BenhNhan")</label>
+                            <input type="text" class="form-control" name="nguoiBenhUserNameFilter" id="NguoiBenhUserNameFilterId">
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="MoTaTrieuChungFilterId">@L("TrieuChung")</label>
+                            <input type="text" class="form-control" name="moTaTrieuChungFilter" id="MoTaTrieuChungFilterId">
+                        </div>
+                    </div>
+                    <div class="col-md-2" hidden>
+                        <div class="form-group">
+                            <label for="NguoiThanHoVaTenFilterId">@L("NguoiThan")</label>
+                            <input type="text" class="form-control" name="nguoiThanHoVaTenFilter" id="NguoiThanHoVaTenFilterId">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IsCoBHYTFilterId">@L("CoBHYT")</label>
+                            <select class="form-control" name="IsCoBHYTFilter" id="IsCoBHYTFilterId">
+                                <option value="-1">@L("All")</option>
+                                <option value="0">@L("KhongBHYT")</option>
+                                <option value="1">@L("CoBHYT")</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="SoTheBHYTFilterId">@L("SoTheBHYT")</label>
+                            <input type="text" class="form-control" name="soTheBHYTFilter" id="SoTheBHYTFilterId">
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="display:none">
+                        <div class="form-group">
+                            <label for="NoiDangKyKCBDauTienFilterId">@L("NoiDangKyKCBDauTien")</label>
+                            <input type="text" class="form-control" name="noiDangKyKCBDauTienFilter" id="NoiDangKyKCBDauTienFilterId">
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="display:none">
+                        <div class="form-group">
+                            <label for="MinBHYTValidDateFilterId">@L("BHYTValidDateRange")</label>
+                            <div class="input-group">
+                                <input class="form-control m-input date-picker" type="text" placeholder="@L("MinValue")" id="MinBHYTValidDateFilterId">
+                                <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                <input class="form-control m-input date-picker" type="text" placeholder="@L("MaxValue")" id="MaxBHYTValidDateFilterId">
+                            </div>
+                        </div>
+                    </div>
+                    @* <div class="col-md-3"> *@
+                    @*     <div class="form-group"> *@
+                    @*         <label for="MinPhuongThucThanhToanFilterId">@L("MinMax") @L("PhuongThucThanhToan")</label> *@
+                    @*         <div class="input-group"> *@
+                    @*             <input type="number" class="form-control m-input" placeholder="@L("MinValue")" name="minPhuongThucThanhToanFilter" id="MinPhuongThucThanhToanFilterId"/> *@
+                    @*             <input type="number" class="form-control m-input" placeholder="@L("MaxValue")" name="maxPhuongThucThanhToanFilter" id="MaxPhuongThucThanhToanFilterId"/> *@
+                    @*         </div> *@
+                    @*     </div> *@
+                    @* </div> *@
+
+                    <div class="col-md-2" hidden>
+                        <div class="form-group">
+                            <label for="MinTimeHoanThanhThanhToanFilterId">@L("ThoiGianThanhToan")</label>
+                            <div class="input-group">
+                                <input class="form-control m-input date-picker" type="text" placeholder="@L("TuNgay")" id="MinTimeHoanThanhThanhToanFilterId">
+                                <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                <input class="form-control m-input date-picker" type="text" placeholder="@L("DenNgay")" id="MaxTimeHoanThanhThanhToanFilterId">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2" hidden>
+                        <div class="form-group">
+                            <label for="IsDaThanhToanFilterId">@L("ThanhToan")</label>
+                            <select class="form-control" name="IsDaThanhToanFilter" id="IsDaThanhToanFilterId">
+                                <option value="-1">@L("All")</option>
+                                <option value="0">@L("ChuaThanhToan")</option>
+                                <option value="1">@L("DaThanhToan")</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2" hidden>
+                        <div class="form-group">
+                            <label for="UserName2FilterId">@L("ThuNgan")</label>
+                            <input type="text" class="form-control" name="userName2Filter" id="UserName2FilterId">
+                        </div>
+                    </div>
+
+                    <input id="FlagFilterId" type="number" class="form-control" name="Flag" value="1" hidden readonly/>
+
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="LichHenKhamsTableFilter">@L("TimKiemTatCa")</label>
+                            <input type="text" id="LichHenKhamsTableFilter" class="form-control m-input" placeholder="@L("SearchWithThreeDot")" value="@Model.FilterText">
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <div>
+                                <button id="GetLichHenKhamsButton" class="btn btn-primary" type="submit">
+                                    <i class="flaticon-search-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <table id="LichHenKhamsTable" class="display table table-striped table-bordered table-hover dt-responsive nowrap">
+                    <thead>
+                    <tr>
+                        <th>@L("Actions")</th>
+                        <th>@L("TongTienThanhToan")</th>
+                        <th>@L("TienDaThanhToan")</th>
+                        <th>@L("TamUng")</th>
+                        <th>@L("ChuyenTiep")</th>
+                        <th>@L("NgayHenKham")</th>
+                        <th>@L("BenhNhan")</th>
+                        <th>@L("DichVu")</th>
+                        <th>@L("BacSi")</th>
+                        <th>@L("ChuyenKhoa")</th>
+                        <th>@L("TinhTrangKham")</th>
+                        <th>@L("ThanhToan")</th>
+                        <th>@L("ThuNgan")</th>
+                        <th>@L("MoTaTrieuChung")</th>
+                        <th>@L("BHYT")</th>
+                        <th>@L("SoTheBHYT")</th>
+                        <th>@L("NoiDangKyKCBDauTien")</th>
+                        <th>@L("BHYTValidDate")</th>
+                        <th>@L("PhuongThucThanhToan")</th>
+                        <th>@L("ThoiGianHoanThanhKham")</th>
+                        <th>@L("ThoiGianThanhToan")</th>
+                        <th>@L("NguoiThan")</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</div>
