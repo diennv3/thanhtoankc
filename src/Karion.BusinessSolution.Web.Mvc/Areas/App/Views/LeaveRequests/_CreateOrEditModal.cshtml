@@ -1,0 +1,142 @@
+﻿@using Karion.BusinessSolution.QuanLyDiemDanh;
+					
+@using System.Globalization
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.LeaveRequests
+@model CreateOrEditLeaveRequestModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditLeaveRequest")) : L("CreateNewLeaveRequest")))
+
+<div class="modal-body">
+        <div id="LeaveRequestInformationsTab">
+            <form name="LeaveRequestInformationsForm" role="form" novalidate class="form-validation">
+
+                @if (Model.IsEditMode)
+                {
+                    <input type="hidden" name="id" value="@Model.LeaveRequest.Id" />
+                }
+
+				            
+								<div class="form-group m-form__group">
+										<label for="NguoiBenhUserName">@L("NguoiBenh")</label>
+									    <div class="input-group">
+											<input class="form-control" id="NguoiBenhUserName" name="nguoiBenhUserName" value="@Model.NguoiBenhUserName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenNguoiBenhLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearNguoiBenhUserNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="LeaveRequest_NguoiBenhId" value="@Model.LeaveRequest.NguoiBenhId" type="text" name="nguoiBenhId"  hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="LeaveRequest_NguoiBenhId" value="" type="text" name="nguoiBenhId"  hidden/>
+								}
+
+            
+								<div class="form-group m-form__group">
+										<label for="UserName">@L("User")</label>
+									    <div class="input-group">
+											<input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="LeaveRequest_UserId" value="@Model.LeaveRequest.UserId" type="text" name="userId" required hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="LeaveRequest_UserId" value="" type="text" name="userId" required hidden/>
+								}
+
+            
+								<div class="form-group m-form__group">
+										<label for="ShiftName">@L("Shift")</label>
+									    <div class="input-group">
+											<input class="form-control" id="ShiftName" name="shiftName" value="@Model.ShiftName" type="text" disabled>
+										<div class="input-group-append">
+											<button class="btn btn-primary blue" id="OpenShiftLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+										</div> 
+										<div class="input-group-prepend">
+											<button class="btn btn-danger btn-icon" type="button" id="ClearShiftNameButton"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+
+								@if (Model.IsEditMode)
+								{
+									<input class="form-control" id="LeaveRequest_ShiftId" value="@Model.LeaveRequest.ShiftId" type="text" name="shiftId" required hidden/>
+								}
+								 else
+								{ 
+									<input class="form-control" id="LeaveRequest_ShiftId" value="" type="text" name="shiftId" required hidden/>
+								}
+
+
+
+				
+								<div class="form-group">
+									<label for="LeaveRequest_StartDateTime">@L("StartDateTime")</label>
+									<input class="form-control m-input date-picker" id="LeaveRequest_StartDateTime" type="text" name="startDateTime" value="@Model.LeaveRequest.StartDateTime"/>
+								</div>
+					
+								<div class="form-group">
+									<label for="LeaveRequest_EndDateTime">@L("EndDateTime")</label>
+									<input class="form-control m-input date-picker" id="LeaveRequest_EndDateTime" type="text" name="endDateTime" value="@Model.LeaveRequest.EndDateTime"/>
+								</div>
+					
+								<div class="form-group">
+									<label for="LeaveRequest_LeaveType">@L("LeaveType")</label>
+									<input class="form-control" id="LeaveRequest_LeaveType" value="@Model.LeaveRequest.LeaveType" type="text" name="leaveType"     />
+								</div>
+					
+								@{
+					var selectListStatus = Html.GetEnumSelectList(typeof(LeaveRequestStatus));
+					 foreach (var selectOption in selectListStatus) { selectOption.Text = L("Enum_LeaveRequestStatus_" + selectOption.Value); }
+					}
+								<div class="form-group m-form__group">
+									<label for="LeaveRequest_Status">@L("Status")</label>
+										<select class="form-control m-input m-input--square" name="status" id="LeaveRequest_Status" asp-for="@Model.LeaveRequest.Status" asp-items="@selectListStatus">
+									</select>
+								</div>
+					
+								<div class="form-group">
+									<label for="LeaveRequest_Reason">@L("Reason")</label>
+									<input class="form-control" id="LeaveRequest_Reason" value="@Model.LeaveRequest.Reason" type="text" name="reason"     />
+								</div>
+					
+								<div class="m-checkbox-list">
+									<label for="LeaveRequest_IsForEarlyLeave" class="kt-checkbox">
+										<input id="LeaveRequest_IsForEarlyLeave" type="checkbox" name="isForEarlyLeave" value="true" @Html.Raw(Model.LeaveRequest.IsForEarlyLeave ?"checked=\"checked\"":"") />
+										@L("IsForEarlyLeave")
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="m-checkbox-list">
+									<label for="LeaveRequest_IsForLateArrival" class="kt-checkbox">
+										<input id="LeaveRequest_IsForLateArrival" type="checkbox" name="isForLateArrival" value="true" @Html.Raw(Model.LeaveRequest.IsForLateArrival ?"checked=\"checked\"":"") />
+										@L("IsForLateArrival")
+										<span></span>
+									</label>
+								</div>
+					
+
+            </form>
+        </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

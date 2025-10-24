@@ -1,6 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>    <text name="Shift">Shift</text>
+  <texts>    <text name="LeaveRequest">Leave request</text>
+    <text name="Karion.BusinessSolution.QuanLyDiemDanh.LeaveRequest">LeaveRequest</text>
+    <text name="StartDateTime">Start date time</text>
+    <text name="EndDateTime">End date time</text>
+    <text name="LeaveType">Leave type</text>
+    <text name="Reason">Reason</text>
+    <text name="IsForEarlyLeave">Is for early leave</text>
+    <text name="NotIsForEarlyLeave">Not is for early leave</text>
+    <text name="IsForLateArrival">Is for late arrival</text>
+    <text name="NotIsForLateArrival">Not is for late arrival</text>
+    <text name="LeaveRequestsHeaderInfo">Leave requests header info</text>
+    <text name="CreateNewLeaveRequest">Create new leave request</text>
+    <text name="EditLeaveRequest">Edit leave request</text>
+    <text name="DeleteLeaveRequest">Delete leave request</text>
+    <text name="LeaveRequests">Leave requests</text>
+    <text name="Enum_LeaveRequestStatus_0">Pending</text>
+    <text name="Enum_LeaveRequestStatus_1">Approved</text>
+    <text name="Enum_LeaveRequestStatus_2">Rejected</text>
+    <text name="ShiftName">Shift name</text>
+    <text name="PickShift">Pick shift</text>
+    <text name="StartDateTimeRange">Start date time range</text>
+    <text name="EndDateTimeRange">End date time range</text>
+    <text name="Shift">Shift</text>
     <text name="Karion.BusinessSolution.QuanLyDanhMuc.Shift">Shift</text>
     <text name="WorkDaysMask">Work days mask</text>
     <text name="ToleranceMinutes">Tolerance minutes</text>

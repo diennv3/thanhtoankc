@@ -59,6 +59,8 @@ namespace Karion.BusinessSolution
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditLeaveRequestDto, LeaveRequest>().ReverseMap();
+            configuration.CreateMap<LeaveRequestDto, LeaveRequest>().ReverseMap();
             configuration.CreateMap<CreateOrEditShiftDto, Shift>().ReverseMap();
             configuration.CreateMap<ShiftDto, Shift>().ReverseMap();
             configuration.CreateMap<CreateOrEditThongTinDonViDto, ThongTinDonVi>().ReverseMap();

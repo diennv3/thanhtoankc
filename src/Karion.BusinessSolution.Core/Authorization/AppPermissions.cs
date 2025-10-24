@@ -6,6 +6,11 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_LeaveRequests = "Pages.LeaveRequests";
+        public const string Pages_LeaveRequests_Create = "Pages.LeaveRequests.Create";
+        public const string Pages_LeaveRequests_Edit = "Pages.LeaveRequests.Edit";
+        public const string Pages_LeaveRequests_Delete = "Pages.LeaveRequests.Delete";
+
         public const string Pages_Shifts = "Pages.Shifts";
         public const string Pages_Shifts_Create = "Pages.Shifts.Create";
         public const string Pages_Shifts_Edit = "Pages.Shifts.Edit";

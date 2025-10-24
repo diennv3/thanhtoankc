@@ -4,6 +4,7 @@
     {
         public static class Common
         {
+            public const string LeaveRequests = "QuanLyDiemDanh.LeaveRequests";
             public const string Shifts = "QuanLyDanhMuc.Shifts";
             public const string ThongTinDonVies = "QuanLyDanhMuc.ThongTinDonVies";
             //public const string ThongTinDonVies = "QuanLyDiemDanh.ThongTinDonVies";

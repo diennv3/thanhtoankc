@@ -14,7 +14,27 @@
 	    QUY,
 	    NAM
     }
+    public enum LeaveRequestType
+    {
+        FullDay = 0,
+        HalfDay = 1,
+        EarlyLeave = 2,
+        LateArrival = 3,
+        Other = 4
+    }
 
+    public enum HalfDayPart
+    {
+        Morning = 0,
+        Afternoon = 1
+    }
+
+    public enum LeaveRequestStatus
+    {
+        Pending = 0,
+        Approved = 1,
+        Rejected = 2
+    }
     public enum WorkDayFlags
     {
         NONE = 0,

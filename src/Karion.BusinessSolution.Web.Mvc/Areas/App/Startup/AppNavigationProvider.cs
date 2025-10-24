@@ -130,6 +130,14 @@ namespace Karion.BusinessSolution.Web.Areas.App.Startup
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Attendances)
                     )
                 )
+                .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.LeaveRequests,
+                        L("LeaveRequests"),
+                        url: "App/LeaveRequests",
+                        icon: "flaticon-more",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_LeaveRequests)
+                    )
+                )
                 // .AddItem(new MenuItemDefinition(
                 //         AppPageNames.Host.NguoiBenhNotifications,
                 //         L("NguoiBenhNotifications"),

@@ -30,6 +30,13 @@ namespace Karion.BusinessSolution.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var leaveRequests = pages.CreateChildPermission(AppPermissions.Pages_LeaveRequests, L("LeaveRequests"));
+            leaveRequests.CreateChildPermission(AppPermissions.Pages_LeaveRequests_Create, L("CreateNewLeaveRequest"));
+            leaveRequests.CreateChildPermission(AppPermissions.Pages_LeaveRequests_Edit, L("EditLeaveRequest"));
+            leaveRequests.CreateChildPermission(AppPermissions.Pages_LeaveRequests_Delete, L("DeleteLeaveRequest"));
+
+
+
             var shifts = pages.CreateChildPermission(AppPermissions.Pages_Shifts, L("Shifts"));
             shifts.CreateChildPermission(AppPermissions.Pages_Shifts_Create, L("CreateNewShift"));
             shifts.CreateChildPermission(AppPermissions.Pages_Shifts_Edit, L("EditShift"));

@@ -1,0 +1,60 @@
+﻿
+@using Karion.BusinessSolution.Web.Areas.App.Models.Common.Modals
+@using Karion.BusinessSolution.Web.Areas.App.Models.LeaveRequests
+@model LeaveRequestViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="LeaveRequestInformationsTab">
+        
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("StartDateTime") :</h6>
+                @Model.LeaveRequest.StartDateTime
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("EndDateTime") :</h6>
+                @Model.LeaveRequest.EndDateTime
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("LeaveType") :</h6>
+                @Model.LeaveRequest.LeaveType
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Status") :</h6>
+                @L("Enum_LeaveRequestStatus_" + (int)Model.LeaveRequest.Status)
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Reason") :</h6>
+                @Model.LeaveRequest.Reason
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("IsForEarlyLeave") :</h6>
+                @Model.LeaveRequest.IsForEarlyLeave
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("IsForLateArrival") :</h6>
+                @Model.LeaveRequest.IsForLateArrival
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("NguoiBenh")) @L("UserName") :</h6>
+                @Model.NguoiBenhUserName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("User")) @L("Name") :</h6>
+                @Model.UserName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("Shift")) @L("Name") :</h6>
+                @Model.ShiftName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")
+

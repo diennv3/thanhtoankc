@@ -23,6 +23,8 @@ namespace Karion.BusinessSolution.EntityFrameworkCore
 {
     public class BusinessSolutionDbContext : AbpZeroDbContext<Tenant, Role, User, BusinessSolutionDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<LeaveRequest> LeaveRequests { get; set; }
+
         public virtual DbSet<Shift> Shifts { get; set; }
 
         public virtual DbSet<ThongTinDonVi> ThongTinDonVies { get; set; }
@@ -120,7 +122,12 @@ namespace Karion.BusinessSolution.EntityFrameworkCore
            
            
            
-            modelBuilder.Entity<Shift>(s =>
+           
+            modelBuilder.Entity<LeaveRequest>(l =>
+            {
+                l.HasIndex(e => new { e.TenantId });
+            });
+ modelBuilder.Entity<Shift>(s =>
             {
                 s.HasIndex(e => new { e.TenantId });
             });

@@ -3,14 +3,16 @@ using System;
 using Karion.BusinessSolution.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Karion.BusinessSolution.Migrations
 {
     [DbContext(typeof(BusinessSolutionDbContext))]
-    partial class BusinessSolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251024024800_Added_LeaveRequest")]
+    partial class Added_LeaveRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3089,12 +3091,6 @@ namespace Karion.BusinessSolution.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ApprovedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<long?>("ApprovedByUserId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime(6)");
 
@@ -3107,14 +3103,8 @@ namespace Karion.BusinessSolution.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<double?>("DurationHours")
-                        .HasColumnType("double");
-
                     b.Property<DateTime>("EndDateTime")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<int?>("HalfDayPart")
-                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
@@ -3131,13 +3121,16 @@ namespace Karion.BusinessSolution.Migrations
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("LeaveType")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<int?>("NguoiBenhId")
                         .HasColumnType("int");
 
                     b.Property<string>("Reason")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("ShiftId")
+                    b.Property<int>("ShiftId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDateTime")
@@ -3149,10 +3142,7 @@ namespace Karion.BusinessSolution.Migrations
                     b.Property<int?>("TenantId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -3662,11 +3652,15 @@ namespace Karion.BusinessSolution.Migrations
 
                     b.HasOne("Karion.BusinessSolution.QuanLyDanhMuc.Shift", "ShiftFk")
                         .WithMany()
-                        .HasForeignKey("ShiftId");
+                        .HasForeignKey("ShiftId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Karion.BusinessSolution.Authorization.Users.User", "UserFk")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>
